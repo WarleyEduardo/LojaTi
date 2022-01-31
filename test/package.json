@@ -1,0 +1,16 @@
+{
+	"name": "ecomerce-api",
+	"version": "0.0.1",
+	"description": "Api para curso ecomerce do zero",
+	"main": "server.js",
+	"scripts": {
+		"test": "mocha --timeout 2000 --exit",
+		"dev": "NODE_ENV=development nodemon server.js",
+		"build": "NODE_ENV=production pm2 serve.js --name=\"ecommerce-api\""
+	},
+	"author": "Warley",
+	"license": "ISC",
+	"dependencies": {
+		"nodemon": "^2.0.15"
+	}
+}
