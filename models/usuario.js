@@ -51,7 +51,7 @@ const UsuarioSchema = new mongoose.Schema(
 UsuarioSchema.plugin(uniqueValitador, { message: 'já está sendo utilizado' });
 
 // criando a senha de usuario
-UsuarioSchema.method.setSenha = function (password) {
+UsuarioSchema.methods.setSenha = function (password) {
 	this.salt = crypto.randomBytes(16).toString('hex');
 	this.hash = crypto.pbkdf2Sync(
 		password,
@@ -64,7 +64,7 @@ UsuarioSchema.method.setSenha = function (password) {
 
 // validando se senha é a mesma do usuario
 
-UsuarioSchema.method.validaSenha = function (password) {
+UsuarioSchema.methods.validaSenha = function (password) {
 	const hash = crypto.pbkdf2Sync(
 		password,
 		this.salt,
@@ -78,14 +78,14 @@ UsuarioSchema.method.validaSenha = function (password) {
 
 // gerar o token
 
-UsuarioSchema.method.gerarToken = function () {
+UsuarioSchema.methods.gerarToken = function () {
 	const hoje = new Date();
 	const exp = new Date(hoje);
 	exp.setDate(hoje.getDate() + 15);
 
 	return jwt.sign(
 		{
-			id: this.id,
+			id: this._id,
 			email: this.email,
 			nome: this.nome,
 			exp: parseFloat(exp.getTime() / 1000, 10),
@@ -95,9 +95,9 @@ UsuarioSchema.method.gerarToken = function () {
 };
 
 // enviar o token
-UsuarioSchema.method.enviarAuthJSON = function () {
+UsuarioSchema.methods.enviarAuthJSON = function () {
 	return {
-		_id: this._id,
+		//_id: this._id,
 		nome: this.nome,
 		email: this.email,
 		loja: this.loja,
@@ -108,7 +108,7 @@ UsuarioSchema.method.enviarAuthJSON = function () {
 
 // recuperaçaõ de setSenha
 
-UsuarioSchema.method.criarTokenRecuperacaoSenha = function () {
+UsuarioSchema.methods.criarTokenRecuperacaoSenha = function () {
 	this.recovery = {};
 	this.recovery.token = crypto.randomBytes(16).toString('hex');
 	this.recovery.date = new Date(new Date().getTime + 24 * 60 * 60 * 1000);
@@ -116,7 +116,7 @@ UsuarioSchema.method.criarTokenRecuperacaoSenha = function () {
 };
 
 // limpar dados de recuperaçaõ de setSenha
-UsuarioSchema.method.finalizarTokenRecuperacaoSenha = function () {
+UsuarioSchema.methods.finalizarTokenRecuperacaoSenha = function () {
 	this.recovery = { token: null, date: null };
 	return this.recovery;
 };

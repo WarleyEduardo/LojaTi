@@ -58,7 +58,10 @@ class UsuarioController {
 		usuario
 			.save()
 			.then(() => res.json({ usuario: usuario.enviarAUTHJSON() }))
-			.catch(next);
+			.catch((err) => {
+				console.log(err);
+				next(err);
+			});
 	}
 
 	//	put /
