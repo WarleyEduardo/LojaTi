@@ -61,6 +61,7 @@ class UsuarioController {
 			.catch((err) => {
 				console.log(err);
 				next(err);
+				return res.json({ errors: err.message });
 			});
 	}
 

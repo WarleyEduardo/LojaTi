@@ -6,7 +6,7 @@ const usuarioController = new UsuarioController();
 
 // inserção
 router.post('/login', usuarioController.login);
-router.post('/registrar', usuarioController.store);
+router.post('/registrar', usuarioController.store); // testado
 
 // alteração
 router.put('/', auth.required, usuarioController.update);
