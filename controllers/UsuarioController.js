@@ -14,7 +14,7 @@ class UsuarioController {
 					return res
 						.status(401)
 						.json({ erros: 'Usuario não registrado' });
-				return res.json({ usuario: usuario.enviarAUTHJSON() });
+				return res.json({ usuario: usuario.enviarAuthJSON() });
 			})
 			.catch(next);
 	}
@@ -57,7 +57,7 @@ class UsuarioController {
 
 		usuario
 			.save()
-			.then(() => res.json({ usuario: usuario.enviarAUTHJSON() }))
+			.then(() => res.json({ usuario: usuario.enviarAuthJSON() }))
 			.catch((err) => {
 				console.log(err);
 				next(err);
@@ -82,7 +82,7 @@ class UsuarioController {
 				return usuario
 					.save()
 					.then(() => {
-						return res.json({ usuario: usuario.enviarAUTHJSON() });
+						return res.json({ usuario: usuario.enviarAuthJSON() });
 					})
 					.catch(next);
 			})
@@ -126,7 +126,7 @@ class UsuarioController {
 				if (!usuario.validarSenha(password))
 					return res.status(401).json({ erros: 'Senha Inválida' });
 
-				return res.json({ usuario: usuario.enviarAUTHJSON() });
+				return res.json({ usuario: usuario.enviarAuthJSON() });
 			})
 			.catch(next);
 	}
