@@ -151,7 +151,7 @@ class UsuarioController {
 
 		usuario
 			.findOne({ email })
-			.then((usario) => {
+			.then((usuario) => {
 				if (!usuario)
 					return res.render('recovery', {
 						error: 'Não existe usuário com esse e-mail',
