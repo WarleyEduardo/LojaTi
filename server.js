@@ -20,8 +20,8 @@ app.use('/public/images', express.static(__dirname + '/public/images'));
 
 // Setup mongodb
 
-const dbs = require('./config/database');
-const dbURI = isProduction ? dbs.dbProduction : dbs.dbTeste;
+const dbs = require('./config/database.json');
+const dbURI = isProduction ? dbs.dbProduction : dbs.dbTest;
 mongoose.connect(dbURI, { useNewUrlParser: true });
 
 //Setup ESJ

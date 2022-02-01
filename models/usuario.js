@@ -16,7 +16,7 @@ const UsuarioSchema = new mongoose.Schema(
 
 		email: {
 			type: String,
-			loadClass: true,
+			lowercase: true,
 			unique: true,
 			required: [true, 'não pode ficar vazio.'],
 			index: true,
