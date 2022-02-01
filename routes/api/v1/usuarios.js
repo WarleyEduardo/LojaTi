@@ -5,7 +5,7 @@ const UsuarioController = require('../../../controllers/UsuarioController');
 const usuarioController = new UsuarioController();
 
 // inserção
-router.post('/login', usuarioController.login);
+router.post('/login', usuarioController.login); // testado
 router.post('/registrar', usuarioController.store); // testado
 
 // alteração
