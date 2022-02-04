@@ -5,16 +5,16 @@
 
 module.exports = {
 	secret:
-		process.env.Node_Env === 'production'
-			? process.env.secret
+		process.env.NODE_ENV === 'production'
+			? process.env.SECRET
 			: 'ADS4545FDSFSDKKKDSFAKDSAFA785645DQREZ244QERA64545',
 	api:
-		process.env.Node_Env === 'production'
-			? 'https//api.loja-teste.ampliee.com'
-			: 'http//localhost:3000',
+		process.env.NODE_ENV === 'production'
+			? 'https://api.loja-teste.ampliee.com'
+			: 'http://localhost:3000',
 
 	loja:
-		process.env.Node_Env === 'production'
-			? 'https//loja-teste.ampliee.com'
-			: 'http//localhost:8000',
+		process.env.NODE_ENV === 'production'
+			? 'https://loja-teste.ampliee.com'
+			: 'http://localhost:8000',
 };

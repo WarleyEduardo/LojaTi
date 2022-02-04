@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { restart } = require('nodemon');
 const Usuario = mongoose.model('Usuario');
-const enviarEmailRecovery = require('../helpers/email-recovery.js');
+const enviarEmailRecovery = require('../helpers/email-recovery');
 const usuario = require('../models/usuario');
 
 class UsuarioController {

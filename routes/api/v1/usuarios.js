@@ -9,10 +9,10 @@ router.post('/login', usuarioController.login); // testado
 router.post('/registrar', usuarioController.store); // testado
 
 // alteração
-router.put('/', auth.required, usuarioController.update);
+router.put('/', auth.required, usuarioController.update); // testado
 
 // deleção
-router.delete('/', auth.required, usuarioController.remove);
+router.delete('/', auth.required, usuarioController.remove); // testado
 
 // recuperar senha.
 
@@ -20,7 +20,7 @@ router.delete('/', auth.required, usuarioController.remove);
 router.get('/recuperar-senha', usuarioController.showRecovery);
 
 //enviar o e-mail para ser recuperado
-router.get('/recuperar-senha', usuarioController.createRecovery);
+router.post('/recuperar-senha', usuarioController.createRecovery);
 
 // informar nova senha
 router.get('/senha-recuperada', usuarioController.showCompleteRecovery);
@@ -29,7 +29,7 @@ router.get('/senha-recuperada', usuarioController.showCompleteRecovery);
 router.post('/senha-recuperada', usuarioController.completeRecovery);
 
 // buscar
-router.get('/', auth.required, usuarioController.index);
-router.get('/:id', auth.required, usuarioController.show);
+router.get('/', auth.required, usuarioController.index); // testado
+router.get('/:id', auth.required, usuarioController.show); // testado
 
 module.exports = router;
