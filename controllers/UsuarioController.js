@@ -142,20 +142,20 @@ class UsuarioController {
 
 	// post / recuperar-Senha
 
+	// POST /recuperar-senha
 	createRecovery(req, res, next) {
 		const { email } = req.body;
 		if (!email)
 			return res.render('recovery', {
-				error: 'preenchar o e-mail',
+				error: 'Preencha com o seu email',
 				success: null,
 			});
 
-		usuario
-			.findOne({ email })
+		Usuario.findOne({ email })
 			.then((usuario) => {
 				if (!usuario)
 					return res.render('recovery', {
-						error: 'Não existe usuário com esse e-mail',
+						error: 'Não existe usuário com este email',
 						success: null,
 					});
 				const recoveryData = usuario.criarTokenRecuperacaoSenha();
@@ -164,13 +164,13 @@ class UsuarioController {
 					.then(() => {
 						enviarEmailRecovery(
 							{ usuario, recovery: recoveryData },
-							((error = null), (success = null))
+							(error = null, success = null) => {
+								return res.render('recovery', {
+									error,
+									success,
+								});
+							}
 						);
-
-						return res.render('recovery', {
-							error,
-							success,
-						});
 					})
 					.catch(next);
 			})
