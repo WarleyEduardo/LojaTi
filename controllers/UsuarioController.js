@@ -195,7 +195,7 @@ class UsuarioController {
 					});
 
 				if (new Date(usuario.recovery.date) < new Date())
-					retun = res.render('recovery', {
+					return res.render('recovery', {
 						error: 'token expirado,tente novamente',
 						success: null,
 					});

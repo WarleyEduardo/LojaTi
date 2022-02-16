@@ -103,7 +103,7 @@ UsuarioSchema.methods.enviarAuthJSON = function () {
 UsuarioSchema.methods.criarTokenRecuperacaoSenha = function () {
 	this.recovery = {};
 	this.recovery.token = crypto.randomBytes(16).toString('hex');
-	this.recovery.date = new Date(new Date().getTime + 24 * 60 * 60 * 1000);
+	this.recovery.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
 	return this.recovery;
 };
 
