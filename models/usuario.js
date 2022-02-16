@@ -5,7 +5,6 @@ const uniqueValitador = require('mongoose-unique-validator');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const secret = require('../config').secret;
-const { timeStamp } = require('console');
 
 const UsuarioSchema = new mongoose.Schema(
 	{

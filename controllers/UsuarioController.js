@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const { restart } = require('nodemon');
 const Usuario = mongoose.model('Usuario');
 const enviarEmailRecovery = require('../helpers/email-recovery');
-const usuario = require('../models/usuario');
 
 class UsuarioController {
 	// get /
@@ -113,6 +111,7 @@ class UsuarioController {
 
 	login(req, res, next) {
 		const { email, password } = req.body;
+
 		if (!email)
 			return res.status(422).json({ email: 'não pode ficar vazio' });
 		if (!password)
