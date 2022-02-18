@@ -34,7 +34,7 @@ class LojaController {
 		if (!email) error.push('email');
 		if (!telefones) error.push('telefone');
 		if (!endereco) error.push('endereco');
-		if (!error.length > 0)
+		if (error.length > 0)
 			return res.status(422).json({ error: 'required', payload: error });
 
 		const loja = new Loja({ nome, cnpj, email, telefones, endereco });
