@@ -30,7 +30,7 @@ module.exports = (req, res, next) => {
 				return res.sendStatus(401);
 
 			/* se a loja do no usuario for diferente da loja informada então retorna sem autorização */
-			if (usuario.loja !== loja) return res.sendStatus(401);
+			if (usuario.loja.toString() !== loja) return res.sendStatus(401);
 
 			/* passando por todas as requisições acima, então o usuario e loja estao validos */
 			next();
