@@ -14,6 +14,9 @@ router.get('/', (req, res, next) => res.send({ ok: true })); // rota de teste  p
 
 /* routa de validação  */
 
+/*
+Modulo 6 - Api Validações   Preparando e fazendo Setup da validação.
+
 router.use(function (err, req, res, next) {
 	if (err.name === 'ValidationError') {
 		return res.status(422).json({
@@ -25,5 +28,6 @@ router.use(function (err, req, res, next) {
 
 	return next(err);
 });
+*/
 
 module.exports = router;
