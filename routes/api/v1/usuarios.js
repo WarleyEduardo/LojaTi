@@ -2,10 +2,26 @@ const router = require('express').Router();
 const auth = require('../../auth');
 const UsuarioController = require('../../../controllers/UsuarioController');
 
+const Validation = require('express-validation'); //    Modulo 6 - Api Validações   Preparando e fazendo Setup da validação.
+
+const {
+	UsuarioValidation,
+} = require('../../../controllers/validacoes/usuarioValidation');
+
+//  Modulo 6 - Api Validações   Preparando e fazendo Setup da validação.
+
 const usuarioController = new UsuarioController();
 
 // inserção
-router.post('/login', usuarioController.login); // testado
+//router.post('/login', usuarioController.login); // testado
+router.post(
+	'/login',
+	Validation(UsuarioValidation.login),
+	usuarioController.login
+);
+
+// Modulo 6 - Api Validações   Preparando e fazendo Setup da validação.
+
 router.post('/registrar', usuarioController.store); // testado
 
 // alteração

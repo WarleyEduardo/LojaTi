@@ -14,6 +14,9 @@ module.exports = (req, res, next) => {
 	/*pegar o id da loja  ex.: ?loja=i1mdilm*/
 	const { loja } = req.query;
 
+	//poderia pegar a loja pelo proprio id  , entender isso meelhor depois
+	//const loja = req.params.id;
+
 	/*se não tiver loja retorna sem autorizaçao*/
 	if (!loja) return res.sendStatus(401);
 

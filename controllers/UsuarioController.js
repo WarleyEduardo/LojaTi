@@ -45,10 +45,17 @@ class UsuarioController {
 	store(req, res, next) {
 		const { nome, email, password, loja } = req.body;
 
+		let campovazio = '';
+
+		if (!nome) campovazio = 'nome';
+		if (!email) campovazio = 'email';
+		if (!password) campovazio = 'password';
+		if (!loja) campovazio = 'loja';
+
 		if (!nome || !email || !password || !loja)
-			return res
-				.status(422)
-				.json({ errors: 'Preenchar todos os campos' });
+			return res.status(422).json({
+				errors: `Preenchar todos os campos. Campo vazio:  ${campovazio}`,
+			});
 
 		const usuario = new Usuario({ nome, email, loja });
 		usuario.setSenha(password);
@@ -111,11 +118,18 @@ class UsuarioController {
 
 	login(req, res, next) {
 		const { email, password } = req.body;
-
+		/* 
+		
+		  Modulo 6 - Api Validações 
+          Preparando e fazendo Setup da validação.
+		
 		if (!email)
 			return res.status(422).json({ email: 'não pode ficar vazio' });
 		if (!password)
 			return res.status(422).json({ password: 'não pode ficar vazio' });
+        
+		
+		*/
 
 		Usuario.findOne({ email })
 			.then((usuario) => {

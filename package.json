@@ -18,7 +18,7 @@
 		"ejs": "^2.6.1",
 		"express": "^4.16.4",
 		"express-jwt": "^5.3.1",
-		"express-validation": "^1.0.2",
+		"express-validation": "^1.0.3",
 		"faker": "^4.1.0",
 		"joi": "^14.3.1",
 		"joi-date-extensions": "^1.2.0",
