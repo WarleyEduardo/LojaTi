@@ -2,7 +2,8 @@ const router = require('express').Router();
 const auth = require('../../auth');
 const UsuarioController = require('../../../controllers/UsuarioController');
 
-const Validation = require('express-validation'); //    Modulo 6 - Api Validações   Preparando e fazendo Setup da validação.
+// Modulo 6 - Api Validações   Preparando e fazendo Setup da validação.
+const Validation = require('express-validation');
 
 const {
 	UsuarioValidation,
@@ -12,20 +13,33 @@ const {
 
 const usuarioController = new UsuarioController();
 
-// inserção
+// Modulo 6 - Api Validações   Preparando e fazendo Setup da validação.
 //router.post('/login', usuarioController.login); // testado
+
 router.post(
 	'/login',
 	Validation(UsuarioValidation.login),
 	usuarioController.login
+); // testado
+
+// Modulo 6 - Api Validações  - atualizando as validações no usuario.
+//router.post('/registrar', usuarioController.store); // testado
+// inserção
+router.post(
+	'/registrar',
+	Validation(UsuarioValidation.store),
+	usuarioController.store
 );
 
-// Modulo 6 - Api Validações   Preparando e fazendo Setup da validação.
-
-router.post('/registrar', usuarioController.store); // testado
-
+// Modulo 6 - Api Validações  - atualizando as validações no usuario.
+//router.put('/', auth.required, usuarioController.update); // testado
 // alteração
-router.put('/', auth.required, usuarioController.update); // testado
+router.put(
+	'/',
+	auth.required,
+	Validation(UsuarioValidation.update),
+	usuarioController.update
+);
 
 // deleção
 router.delete('/', auth.required, usuarioController.remove); // testado
@@ -46,6 +60,14 @@ router.post('/senha-recuperada', usuarioController.completeRecovery); // testado
 
 // buscar
 router.get('/', auth.required, usuarioController.index); // testado
-router.get('/:id', auth.required, usuarioController.show); // testado
+
+// Modulo 6 - Api Validações  - atualizando as validações no usuario.
+//router.get('/:id', auth.required, usuarioController.show); // testado
+router.get(
+	'/:id',
+	auth.required,
+	Validation(UsuarioValidation.show),
+	usuarioController.show
+);
 
 module.exports = router;
