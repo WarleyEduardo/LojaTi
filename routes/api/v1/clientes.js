@@ -17,7 +17,15 @@ const clienteController = new ClienteController();
 // ***********  ADMIN =  o que o admin pode fazer ********************
 
 // buscar todos os clientes.
-router.get('/', auth.required, LojaValidation.admin, ClienteController.index);
+//router.get('/', auth.required, LojaValidation.admin, ClienteController.index);
+// Modulo 7 - Api Clientes  -  Validações
+router.get(
+	'/',
+	auth.required,
+	LojaValidation.admin,
+	Validation(ClienteValidation.index),
+	ClienteController.index
+);
 
 // buscar os pedidos.
 /*
@@ -31,20 +39,26 @@ router.get(
 */
 
 // buscar os clientes por nome
+// router.get('/search/:search',auth.required,LojaValidation.admin,	clienteController.search);
 
+// Modulo 7 - Api Clientes  -  Validações
 router.get(
 	'/search/:search',
 	auth.required,
 	LojaValidation.admin,
+	Validation(ClienteValidation.search),
 	clienteController.search
 );
 
 // visualizar os dados do Administração
 
+//router.get('/admin/:id',auth.required,LojaValidation.admin,clienteController.showAdmin);
+// Modulo 7 - Api Clientes  -  Validações
 router.get(
 	'/admin/:id',
 	auth.required,
 	LojaValidation.admin,
+	Validation(ClienteValidation.showAdmin),
 	clienteController.showAdmin
 );
 
@@ -59,24 +73,45 @@ router.get(
 );
 */
 // atualizar os dados do cliente
+// router.put('/admin/:id',auth.required,LojaValidation.admin,clienteController.updateAdmin);
 
+// Modulo 7 - Api Clientes  -  Validações
 router.put(
 	'/admin/:id',
 	auth.required,
 	LojaValidation.admin,
+	Validation(ClienteValidation.updateAdmin),
 	clienteController.updateAdmin
 );
 
 //  *********  CLIENTE = o que o cliente pode fazer *****************
 
 // ver os dados do cliente
-router.get('/:id', auth.required, clienteController.show);
+//router.get('/:id', auth.required, clienteController.show);
+// Modulo 7 - Api Clientes  -  Validações
+router.get(
+	'/:id',
+	auth.required,
+	Validation(ClienteValidation.show),
+	clienteController.show
+);
 
 // criar o cliente
-router.post('/', clienteController.store);
+//router.post('/', clienteController.store);
+
+// Modulo 7 - Api Clientes  -  Validações
+router.post('/', Validation(ClienteValidation.store), clienteController.store);
 
 // alterar os dados do cliente
-router.put('/:id', auth.required, clienteController.update);
+//router.put('/:id', auth.required, clienteController.update);
+
+// Modulo 7 - Api Clientes  -  Validações
+router.put(
+	'/:id',
+	auth.required,
+	Validation(ClienteValidation.update),
+	clienteController.update
+);
 
 // remover o cliente
 router.delete('/:id', auth.required, clienteController.remove);

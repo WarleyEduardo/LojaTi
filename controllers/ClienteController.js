@@ -73,7 +73,7 @@ class ClienteController {
 	// put /admin/:id
 
 	async updateAdmin(req, res, next) {
-		const { nome, cfp, email, telefones, endereco, dataDeNascimento } =
+		const { nome, cpf, email, telefones, endereco, dataDeNascimento } =
 			req.body;
 
 		try {
@@ -86,6 +86,7 @@ class ClienteController {
 				(cliente.usuario.nome = nome), (cliente.nome = nome);
 			}
 
+			if (cpf) cliente.cpf = cpf; // modulo 7 - api cliente - validações ( tinha esquecido)
 			if (email) cliente.usuario.email = email;
 			if (telefones) cliente.telefones = telefones;
 			if (endereco) cliente.endereco = endereco;
