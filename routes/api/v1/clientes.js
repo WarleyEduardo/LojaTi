@@ -24,7 +24,7 @@ router.get(
 	auth.required,
 	LojaValidation.admin,
 	Validation(ClienteValidation.index),
-	ClienteController.index
+	clienteController.index
 );
 
 // buscar os pedidos.

@@ -4,7 +4,7 @@
 
 const BaseJoi = require('joi');
 const Extension = require('joi-date-extensions');
-const Joi = Basejoi.extend(Extension);
+const Joi = BaseJoi.extend(Extension);
 
 const ClienteValidation = {
 	index: {
@@ -24,12 +24,12 @@ const ClienteValidation = {
 	},
 	showAdmin: {
 		params: {
-			id: Joi.string().alphnum().length(24).required(),
+			id: Joi.string().alphanum().length(24).required(),
 		},
 	},
 	updateAdmin: {
 		params: {
-			id: Joi.string().alphnum().length(24).required(),
+			id: Joi.string().alphanum().length(24).required(),
 		},
 		body: {
 			nome: Joi.string().optional(),
@@ -49,10 +49,10 @@ const ClienteValidation = {
 		},
 	},
 	show: {
-		query: { loja: Joi.string().alphnum().length(24).required() },
+		query: { loja: Joi.string().alphanum().length(24).required() },
 	},
 	store: {
-		query: { loja: Joi.string().alphnum().length(24).required() },
+		query: { loja: Joi.string().alphanum().length(24).required() },
 
 		body: {
 			nome: Joi.string().required(),
@@ -73,10 +73,10 @@ const ClienteValidation = {
 		},
 	},
 	update: {
-		query: { loja: Joi.string().alphnum().length(24).required() },
+		query: { loja: Joi.string().alphanum().length(24).required() },
 
 		params: {
-			id: Joi.string().alphnum().length(24).required(),
+			id: Joi.string().alphanum().length(24).required(),
 		},
 		body: {
 			nome: Joi.string().optional(),

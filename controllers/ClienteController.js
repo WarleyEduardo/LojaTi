@@ -1,6 +1,5 @@
 // Modulo 7 -  Api clientes  - criando metodos do controller para administradores.
 
-const { number } = require('joi');
 const mongoose = require('mongoose');
 const Cliente = mongoose.model('Cliente');
 const Usuario = mongoose.model('Usuario');
