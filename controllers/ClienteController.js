@@ -127,7 +127,8 @@ class ClienteController {
 			dataDeNascimento,
 			password,
 		} = req.body;
-		const { loja } = req.query.loja;
+
+		const { loja } = req.query;
 
 		const usuario = new Usuario({ nome, email, loja });
 		usuario.setSenha(password);
