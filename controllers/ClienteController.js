@@ -15,7 +15,12 @@ class ClienteController {
 			const limit = Number(req.query.limit) || 30;
 			const clientes = await Cliente.paginate(
 				{ loja: req.query.loja },
-				{ offset, limit, populate: 'usuario' }
+				//{ offset, limit, populate: 'usuario' }  Modulo 7 - Api clientes - validações ( ocultando o salt e hash)
+				{
+					offset,
+					limit,
+					populate: { path: 'usuario', select: '-salt -hash' },
+				}
 			);
 
 			return res.send({ clientes });
@@ -44,7 +49,12 @@ class ClienteController {
 		try {
 			const clientes = await Cliente.paginate(
 				{ loja: req.query.loja, nome: { $regex: search } },
-				{ offset, limit, populate: 'usuario' }
+				//{ offset, limit, populate: 'usuario' }  Modulo 7 - Api clientes - validações ( ocultando o salt e hash)
+				{
+					offset,
+					limit,
+					populate: { path: 'usuario', select: '-salt -hash' },
+				}
 			);
 
 			return res.send({ clientes });
@@ -62,7 +72,9 @@ class ClienteController {
 					_id: req.params.id,
 					loja: req.query.loja,
 				})
-			).populate('usuario');
+			).populate({ path: 'usuario', select: '-salt -hash' });
+			//).populate('usuario'); Modulo 7 - Api clientes - validações ( ocultando o salt e hash)
+
 			return res.send({ cliente });
 		} catch (e) {
 			next(e);
@@ -79,7 +91,8 @@ class ClienteController {
 			// no exemplo const cliente é maiusculo : const Cliente
 			const cliente = await (
 				await Cliente.findById(req.params.id)
-			).populate('usuario');
+			).populate({ path: 'usuario', select: '-salt -hash' });
+			//).populate('usuario'); Modulo 7 - Api clientes - validações ( ocultando o salt e hash)
 
 			if (nome) {
 				(cliente.usuario.nome = nome), (cliente.nome = nome);
@@ -108,7 +121,8 @@ class ClienteController {
 			const cliente = await Cliente.findOne({
 				usuario: req.payload.id,
 				loja: req.query.loja,
-			}).populate('usuario');
+				//}).populate('usuario'); Modulo 7 - Api clientes - validações ( ocultando o salt e hash)
+			}).populate({ path: 'usuario', select: '-salt -hash' });
 			return res.send({ cliente });
 		} catch (e) {
 			next(e);
@@ -170,9 +184,14 @@ class ClienteController {
 		} = req.body;
 
 		try {
-			const cliente = await (
-				await Cliente.findById(req.payload.id)
-			).populate('usuario');
+			// Modulo 7  -  Api clientes - validações ( correção no codigo )
+			//const cliente = await Cliente.findById(req.payload.id).populate('usuario');
+
+			const cliente = await Cliente.findOne({
+				usuario: req.payload.id,
+			}).populate('usuario');
+
+			if (!cliente) return res.send({ error: 'cliente nao existe.' });
 
 			if (nome) {
 				cliente.usuario.nome = nome;
@@ -187,6 +206,13 @@ class ClienteController {
 			if (dataDeNascimento) cliente.dataDeNascimento;
 
 			await cliente.save();
+
+			// Modulo 7 - Api cliente - Testando o modulo de cliente e finalizando ( ocultado o salt e hash)
+			cliente.usuario = {
+				email: cliente.usuario.email,
+				_id: cliente.usuario._id,
+				permissao: cliente.usuario.permissao,
+			};
 			return res.send({ cliente });
 		} catch (e) {
 			next(e);
