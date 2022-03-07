@@ -89,10 +89,12 @@ class ClienteController {
 
 		try {
 			// no exemplo const cliente é maiusculo : const Cliente
-			const cliente = await (
-				await Cliente.findById(req.params.id)
-			).populate({ path: 'usuario', select: '-salt -hash' });
-			//).populate('usuario'); Modulo 7 - Api clientes - validações ( ocultando o salt e hash)
+			// Modulo 7 - Api clientes - validações ( ocultando o salt e hash)
+			//const cliente = await Cliente.findById(req.params.id).populate('usuario');
+			const cliente = await Cliente.findById(req.params.id).populate({
+				path: 'usuario',
+				select: '-salt -hash',
+			});
 
 			if (nome) {
 				(cliente.usuario.nome = nome), (cliente.nome = nome);
@@ -224,9 +226,9 @@ class ClienteController {
 	*/
 	async remove(req, res, next) {
 		try {
-			const cliente = await (
-				await Cliente.findOne({ usuario: req.payload.id })
-			).populate('usuario');
+			const cliente = await Cliente.findOne({
+				usuario: req.payload.id,
+			}).populate('usuario');
 
 			await cliente.usuario.remove();
 			cliente.deletado = true;
