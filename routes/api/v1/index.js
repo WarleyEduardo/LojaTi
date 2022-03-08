@@ -12,4 +12,8 @@ router.use('/lojas', require('./lojas'));
 
 router.use('/clientes', require('./clientes'));
 
+// Modulo 8 - Api categorias - Criando rotas
+
+router.use('/categorias', require('./categorias'));
+
 module.exports = router;

@@ -240,4 +240,6 @@ class ClienteController {
 	}
 }
 
+// todas a rotas foram testadas
+
 module.exports = ClienteController;
