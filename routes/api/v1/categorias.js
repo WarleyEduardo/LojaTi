@@ -13,19 +13,36 @@ const {
 const categoriaController = new CategoriaController();
 
 // get /
-router.get('/', categoriaController.index);
+//router.get('/', categoriaController.index); Modulo 8 - Api categoria  criando validações
+router.get(
+	'/',
+	Validation(CategoriaValidation.index),
+	categoriaController.index
+);
 
 // get/disponiveis
-router.get('/disponiveis', categoriaController.indexDisponiveis);
+//router.get('/disponiveis', categoriaController.indexDisponiveis); Modulo 8 - Api categoria  criando validações
+router.get(
+	'/disponiveis',
+	Validation(CategoriaValidation.indexDisponiveis),
+	categoriaController.indexDisponiveis
+);
 
 // get/:id
-router.get('/:id', categoriaController.show);
+// router.get('/:id', categoriaController.show); Modulo 8 - Api categoria  criando validações
+
+router.get(
+	'/:id',
+	Validation(CategoriaValidation.show),
+	categoriaController.show
+);
 
 // post  - criar uma nova categoria ( precisa estar logado e ser administrador)
 router.post(
 	'/',
 	auth.required,
 	LojaValidation.admin,
+	Validation(CategoriaValidation.store), // Modulo 8 - Api categoria  criando validações
 	categoriaController.store
 );
 
@@ -34,6 +51,7 @@ router.put(
 	'/',
 	auth.required,
 	LojaValidation.admin,
+	Validation(CategoriaValidation.update), // Modulo 8 - Api categoria  criando validações
 	categoriaController.update
 );
 
@@ -42,6 +60,7 @@ router.delete(
 	'/',
 	auth.required,
 	LojaValidation.admin,
+	Validation(CategoriaValidation.remove), // Modulo 8 - Api categoria  criando validações
 	categoriaController.remove
 );
 

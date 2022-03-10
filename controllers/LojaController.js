@@ -4,7 +4,6 @@
 */
 
 const mongoose = require('mongoose');
-const loja = require('../models/loja');
 const Loja = mongoose.model('Loja');
 
 class LojaController {
