@@ -48,14 +48,14 @@ class CategoriaController {
 
 		categoria
 			.save()
-			.then(() => res.send({ categorria }))
+			.then(() => res.send({ categoria }))
 			.catch(next);
 	}
 	// update /:id
 	async update(req, res, next) {
 		const { nome, codigo, disponibilidade, produtos } = req.body;
 		try {
-			const categoria = await Categoria.findOne(req.params.id);
+			const categoria = await Categoria.findById(req.params.id);
 
 			if (nome) categoria.nome = nome;
 			if (codigo) categoria.codigo = codigo;

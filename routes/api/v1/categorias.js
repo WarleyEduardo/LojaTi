@@ -48,7 +48,7 @@ router.post(
 
 // put  - alterar uma  categoria ( precisa estar logado e ser administrador)
 router.put(
-	'/',
+	'/:id',
 	auth.required,
 	LojaValidation.admin,
 	Validation(CategoriaValidation.update), // Modulo 8 - Api categoria  criando validações
@@ -57,7 +57,7 @@ router.put(
 
 // delete  - remover  categoria( precisa estar logado e ser administrador)
 router.delete(
-	'/',
+	'/:id',
 	auth.required,
 	LojaValidation.admin,
 	Validation(CategoriaValidation.remove), // Modulo 8 - Api categoria  criando validações
