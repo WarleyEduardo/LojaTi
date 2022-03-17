@@ -16,4 +16,8 @@ router.use('/clientes', require('./clientes'));
 
 router.use('/categorias', require('./categorias'));
 
+// Modulo 9 - Api produtos -  Criando rotas
+
+router.use('/produtos', require('./produtos'));
+
 module.exports = router;

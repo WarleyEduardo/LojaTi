@@ -7,5 +7,7 @@ require('./usuario');
 require('./cliente');
 
 // Modulo 8 -  Api categoria - Criando as rotas
-
 require('./categoria');
+
+// Modulo 9 -  Api Produto -  Criando o modelo
+require('./produto');
