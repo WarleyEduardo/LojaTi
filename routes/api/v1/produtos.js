@@ -6,6 +6,12 @@ const {
 	LojaValidation,
 } = require('../../../controllers/validacoes/lojaValidation');
 
+Validation = require('express-validation'); // Modulo 9  - Api produtos - Criando validações
+
+const {
+	ProdutoValidation,
+} = require('../../../controllers/validacoes/produtoValidation'); // Modulo 9  - Api produtos - Criando validações
+
 const auth = require('../../auth');
 const upload = require('../../../config/multer');
 const { route } = require('./usuarios');
@@ -15,13 +21,20 @@ const produtoControler = new ProdutoController();
 // ****  Rotas do ADMIN
 
 // Post - criar um produto
-router.post('/', auth.required, LojaValidation.admin, produtoControler.store);
+router.post(
+	'/',
+	auth.required,
+	LojaValidation.admin,
+	Validation(ProdutoValidation.store), // Modulo 9  - Api produtos - Criando validações
+	produtoControler.store
+);
 // put  -  alterar um produto
 
 router.put(
 	'/:id',
 	auth.required,
 	LojaValidation.admin,
+	Validation(ProdutoValidation.update), // Modulo 9  - Api produtos - Criando validações
 	produtoControler.update
 );
 
@@ -31,33 +44,51 @@ router.put(
 	'/images/:id',
 	auth.required,
 	LojaValidation.admin,
+	Validation(ProdutoValidation.updateImages), // Modulo 9  - Api produtos - Criando validações
 	upload.array('files', 4),
 	produtoControler.updateImages
 );
 
 // delete - remover produto
 
-route.delete(
+router.delete(
 	'/:id',
 	auth.required,
 	LojaValidation.admin,
+	Validation(ProdutoValidation.remove), // Modulo 9  - Api produtos - Criando validações
 	produtoControler.remove
 );
 
 //**** Rotas do CLIENTE/VISITANTES
 
 // get - retornar todos os produtos
-route.get('/', produtoControler.index);
+router.get(
+	'/',
+	Validation(ProdutoValidation.index), // Modulo 9  - Api produtos - Criando validações
+	produtoControler.index
+);
 
 // get- retornar todos os produtos disponiveis
-route.get('/disponiveis', produtoControler.indexDisponiveis);
+router.get(
+	'/disponiveis',
+	Validation(ProdutoValidation.indexDisponiveis), // Modulo 9  - Api produtos - Criando validações
+	produtoControler.indexDisponiveis
+);
 
 // get - localizar por nome
-route.get('/search/:search', produtoControler.search);
+router.get(
+	'/search/:search',
+	Validation(ProdutoValidation.search), // Modulo 9  - Api produtos - Criando validações
+	produtoControler.search
+);
 
 // get para retornar um produto específico.
 
-route.get('/:id', produtoControler.show);
+router.get(
+	'/:id',
+	Validation(ProdutoValidation.show), // Modulo 9  - Api produtos - Criando validações
+	produtoControler.show
+);
 
 // ***** Rotas de VARIAÇOES
 

@@ -1,7 +1,7 @@
 // Modulo 9 -  Api  produtos - Criando controller  para administradores.
-const mongoose = requere('mongoose');
-const Produto = mongoose.model('produto');
-const Categoria = mongoose.model('categoria');
+const mongoose = require('mongoose');
+const Produto = mongoose.model('Produto');
+const Categoria = mongoose.model('Categoria');
 
 const getSort = (sortType) => {
 	switch (sortType) {
