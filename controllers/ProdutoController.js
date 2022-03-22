@@ -46,9 +46,9 @@ class ProdutoController {
 				loja,
 			});
 
-			const categoria = await Categoria.findbyId(categoriaId);
+			const categoria = await Categoria.findById(categoriaId);
 
-			categoria.produtos.push(produto.id);
+			categoria.produtos.push(produto._id);
 
 			await produto.save();
 			await categoria.save();
@@ -156,7 +156,7 @@ class ProdutoController {
 
 			const novasImagens = req.files.map((item) => item.filename);
 
-			produto.fotos = produtos.fotos
+			produto.fotos = produto.fotos
 				.filter((item) => item)
 				.concat(novasImagens);
 
@@ -205,7 +205,7 @@ class ProdutoController {
 
 	async index(req, res, next) {
 		const offset = Number(req.query.offset) || 0;
-		const limit = Number(req.query.limit) || 0;
+		const limit = Number(req.query.limit) || 30;
 		try {
 			const produtos = await Produto.paginate(
 				{ loja: req.query.loja },
@@ -222,7 +222,7 @@ class ProdutoController {
 
 	async indexDisponiveis(req, res, next) {
 		const offset = Number(req.query.offset) || 0;
-		const limit = Number(req.query.limit) || 0;
+		const limit = Number(req.query.limit) || 30;
 		try {
 			const produtos = await Produto.paginate(
 				{ loja: req.query.loja, disponibilidade: true },
@@ -268,9 +268,9 @@ class ProdutoController {
 	// get/:id
 	async show(req, res, next) {
 		try {
-			const produto = await Produto.findById(req.params.id).popule([
-				'avaliacoes',
-				'variacoes',
+			const produto = await Produto.findById(req.params.id).populate([
+				//'avaliacoes',
+				//'variacoes',
 				'loja',
 			]);
 

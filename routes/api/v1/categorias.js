@@ -64,4 +64,15 @@ router.delete(
 	categoriaController.remove
 );
 
+// Modulo 9 - api produtos -  fazendo as atualizações de produtos em categoria
+// Rotas de produtos
+
+router.get('/:id/produtos', categoriaController.showProdutos); // testado
+router.put(
+	'/:id/produtos',
+	auth.required,
+	LojaValidation.admin,
+	categoriaController.updateProdutos
+); // testado
+
 module.exports = router;

@@ -27,7 +27,7 @@ router.post(
 	LojaValidation.admin,
 	Validation(ProdutoValidation.store), // Modulo 9  - Api produtos - Criando validações
 	produtoControler.store
-);
+); // testado
 // put  -  alterar um produto
 
 router.put(
@@ -36,7 +36,7 @@ router.put(
 	LojaValidation.admin,
 	Validation(ProdutoValidation.update), // Modulo 9  - Api produtos - Criando validações
 	produtoControler.update
-);
+); // testado
 
 // put adicionar 4 fotos
 
@@ -47,7 +47,7 @@ router.put(
 	Validation(ProdutoValidation.updateImages), // Modulo 9  - Api produtos - Criando validações
 	upload.array('files', 4),
 	produtoControler.updateImages
-);
+); // testado
 
 // delete - remover produto
 
@@ -57,7 +57,7 @@ router.delete(
 	LojaValidation.admin,
 	Validation(ProdutoValidation.remove), // Modulo 9  - Api produtos - Criando validações
 	produtoControler.remove
-);
+); // testado
 
 //**** Rotas do CLIENTE/VISITANTES
 
@@ -66,21 +66,21 @@ router.get(
 	'/',
 	Validation(ProdutoValidation.index), // Modulo 9  - Api produtos - Criando validações
 	produtoControler.index
-);
+); // testado
 
 // get- retornar todos os produtos disponiveis
 router.get(
 	'/disponiveis',
 	Validation(ProdutoValidation.indexDisponiveis), // Modulo 9  - Api produtos - Criando validações
 	produtoControler.indexDisponiveis
-);
+); // testado
 
 // get - localizar por nome
 router.get(
 	'/search/:search',
 	Validation(ProdutoValidation.search), // Modulo 9  - Api produtos - Criando validações
 	produtoControler.search
-);
+); // testado
 
 // get para retornar um produto específico.
 
@@ -88,7 +88,7 @@ router.get(
 	'/:id',
 	Validation(ProdutoValidation.show), // Modulo 9  - Api produtos - Criando validações
 	produtoControler.show
-);
+); // testado
 
 // ***** Rotas de VARIAÇOES
 
