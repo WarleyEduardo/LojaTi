@@ -11,3 +11,6 @@ require('./categoria');
 
 // Modulo 9 -  Api Produto -  Criando o modelo
 require('./produto');
+
+//Modulo  10 - Api  avaliações - criando o modelo.
+require('./avaliacao');

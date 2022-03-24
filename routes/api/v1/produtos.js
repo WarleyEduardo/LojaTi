@@ -92,6 +92,10 @@ router.get(
 
 // ***** Rotas de VARIAÇOES
 
+//Modulo  10 - Api  avaliações - criando rotas.
+
+router.get('/:id/avaliacoes', produtoControler.showAvaliacoes);
+
 // ***** rotas de AVALIAÇÕES
 
 module.exports = router;
