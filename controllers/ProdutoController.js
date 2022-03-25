@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const Produto = mongoose.model('Produto');
 const Categoria = mongoose.model('Categoria');
 
+const Avaliacao = mongoose.model('Avaliacao'); //Modulo  10 - Api  avaliações - criando controller para administradores e clientes.
+
 const getSort = (sortType) => {
 	switch (sortType) {
 		case 'alfabetica_a-z':
@@ -275,6 +277,18 @@ class ProdutoController {
 			]);
 
 			return res.send({ produto });
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	//Modulo  10 - Api  avaliações - criando controller para administradores e clientes.
+	// avaliações
+	// get /:id/avaliacoes - showAvaliacoes
+	async showAvaliacoes(req, res, next) {
+		try {
+			const avaliacoes = await Avaliacao.find({ produto: req.params.id });
+			return res.send({ avaliacoes });
 		} catch (e) {
 			next(e);
 		}
