@@ -21,6 +21,6 @@ router.use('/categorias', require('./categorias'));
 router.use('/produtos', require('./produtos'));
 
 //Modulo  10 - Api  avaliações - criando rotas.
-router.use('/avalicoes', require('./avaliacoes'));
+router.use('/avaliacoes', require('./avaliacoes'));
 
 module.exports = router;

@@ -10,7 +10,7 @@ class AvaliacaoController {
 		const { loja, produto } = req.query;
 
 		try {
-			const avaliacoes = await Avaliacao.find(loja, produto);
+			const avaliacoes = await Avaliacao.find({ loja, produto });
 
 			return res.send({ avaliacoes });
 		} catch (e) {
@@ -25,7 +25,7 @@ class AvaliacaoController {
 		const { id: _id } = req.params;
 
 		try {
-			const avaliacao = await Avaliacao.findOne(_id, loja, produto);
+			const avaliacao = await Avaliacao.findOne({ _id, loja, produto });
 			return res.send({ avaliacao });
 		} catch (e) {
 			next(e);
