@@ -94,7 +94,11 @@ router.get(
 
 //Modulo  10 - Api  avaliações - criando rotas.
 
-router.get('/:id/avaliacoes', produtoControler.showAvaliacoes);
+router.get(
+	'/:id/avaliacoes',
+	Validation(ProdutoValidation.showAvaliacoes), // Modulo 10  - Api avaliações - fazendo validações com Joi
+	produtoControler.showAvaliacoes
+);
 
 // ***** rotas de AVALIAÇÕES
 

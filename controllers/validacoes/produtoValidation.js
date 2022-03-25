@@ -80,6 +80,14 @@ const ProdutoValidation = {
 			id: Joi.string().alphanum().length(24).required(),
 		},
 	},
+
+	// Modulo 10  - Api avaliações - fazendo validações com Joi
+
+	showAvaliacoes: {
+		params: {
+			id: Joi.string().alphanum().length(24).required(),
+		},
+	},
 };
 
 module.exports = { ProdutoValidation };
