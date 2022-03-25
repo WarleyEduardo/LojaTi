@@ -46,8 +46,12 @@ class AvaliacaoController {
 				produto,
 			});
 
-			const _produto = Produto.findById(produto);
-			_produto.avaliacoes.push(avaliacao_id);
+			const _produto = await Produto.findById(produto);
+
+			if (!_produto)
+				return res.status(422).send({ error: 'produto não existe	' });
+
+			_produto.avaliacoes.push(avaliacao._id);
 
 			await _produto.save();
 			await avaliacao.save();
