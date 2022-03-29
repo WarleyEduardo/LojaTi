@@ -102,4 +102,11 @@ router.get(
 
 // ***** rotas de AVALIAÇÕES
 
+// Módulo 11 -  Api variações - criando e preparando as rotas.
+router.get(
+	'/:id/variacoes',
+	Validation(ProdutoValidation.showVariacoes),
+	produtoControler.showVariacoes
+);
+
 module.exports = router;

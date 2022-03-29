@@ -23,4 +23,7 @@ router.use('/produtos', require('./produtos'));
 //Modulo  10 - Api  avaliações - criando rotas.
 router.use('/avaliacoes', require('./avaliacoes'));
 
+// Módulo 11 -  Api variações - criando e preparando as rotas.
+router.use('/variacoes', require('./variacoes'));
+
 module.exports = router;

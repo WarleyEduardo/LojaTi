@@ -14,3 +14,6 @@ require('./produto');
 
 //Modulo  10 - Api  avaliações - criando o modelo.
 require('./avaliacao');
+
+//Modulo  11 - Api  variações - criando o modelo.
+require('./variacao');

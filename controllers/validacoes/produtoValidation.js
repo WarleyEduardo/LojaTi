@@ -88,6 +88,14 @@ const ProdutoValidation = {
 			id: Joi.string().alphanum().length(24).required(),
 		},
 	},
+
+	// Modulo 11 -  api variações - desenvolvendo as validações automaticas.
+
+	showVariacoes: {
+		params: {
+			id: Joi.string().alphanum().length(24).required(),
+		},
+	},
 };
 
 module.exports = { ProdutoValidation };

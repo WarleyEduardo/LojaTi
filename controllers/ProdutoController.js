@@ -5,6 +5,9 @@ const Categoria = mongoose.model('Categoria');
 
 const Avaliacao = mongoose.model('Avaliacao'); //Modulo  10 - Api  avaliações - criando controller para administradores e clientes.
 
+//Modulo 11 -  Api variações - Desenvolvendo o controller para administradores e clientes.
+const Variacao = mongoose.model('Variacao');
+
 const getSort = (sortType) => {
 	switch (sortType) {
 		case 'alfabetica_a-z':
@@ -289,6 +292,17 @@ class ProdutoController {
 		try {
 			const avaliacoes = await Avaliacao.find({ produto: req.params.id });
 			return res.send({ avaliacoes });
+		} catch (e) {
+			next(e);
+		}
+	}
+
+	//Modulo 11 -  Api variações - Desenvolvendo o controller para administradores e clientes.
+
+	async showVariacoes(req, res, next) {
+		try {
+			const Variacoes = await Variacoes.find({ produto: req.params.id });
+			return res.send({ Variacoes });
 		} catch (e) {
 			next(e);
 		}
