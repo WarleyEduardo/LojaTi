@@ -68,34 +68,28 @@ class VariacaoController {
 	// put/:id - update
 
 	async update(req, res, next) {
-		const {
-			codigo,
-			disponibilidade,
-			nome,
-			preco,
-			promocao,
-			entrega,
-			quantidade,
-		} = req.body;
+		const { codigo, fotos, nome, preco, promocao, entrega, quantidade } =
+			req.body;
+
 		const { loja, produto } = req.query;
 		const { id: _id } = req.params;
 		try {
-			const variacao = Variacao.findOne(loja, produto, _id);
+			const variacao = await Variacao.findOne({ loja, produto, _id });
 			if (!variacao)
 				return res
 					.status(400)
 					.send({ error: 'Variação não encontrada' });
 
 			if (codigo) variacao.codigo = codigo;
-			if (disponibilidade !== undefined)
-				variacao.disponibilidade = disponibilidade;
 			if (nome) variacao.nome = nome;
 			if (preco) variacao.preco = preco;
 			if (promocao) variacao.promocao = promocao;
 			if (entrega) variacao.entrega = entrega;
 			if (quantidade) variacao.quantidade = quantidade;
+			if (fotos) variacao.fotos = fotos;
 
 			await variacao.save();
+
 			return res.send({ variacao });
 		} catch (e) {
 			next(e);
@@ -109,7 +103,7 @@ class VariacaoController {
 		const { id: _id } = req.params;
 
 		try {
-			const variacao = await Variacao.findOne(loja, produto, _id);
+			const variacao = await Variacao.findOne({ loja, produto, _id });
 
 			if (!variacao)
 				return res
@@ -118,7 +112,7 @@ class VariacaoController {
 			const novasImages = req.files.map((item) => item.filename);
 			variacao.fotos = variacao.fotos
 				.filter((item) => item)
-				.concat(NovasImages);
+				.concat(novasImages);
 
 			await variacao.save();
 			return res.send({ variacao });
@@ -135,7 +129,7 @@ class VariacaoController {
 		const { id: _id } = req.params;
 
 		try {
-			const variacao = await Variacao.findOne(loja, produto, _id);
+			const variacao = await Variacao.findOne({ loja, produto, _id });
 			if (!variacao)
 				return res
 					.status(400)

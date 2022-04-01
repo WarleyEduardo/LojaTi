@@ -28,15 +28,14 @@ router.get(
 );
 
 // buscar os pedidos.
-/*
- será criada quando estiver no modulo de pedidos
+
+//Modulo 12 - Api pedidos -  criando as rotas para pedidos.
 router.get(
 	'/search/:search/pedidos',
 	auth.required,
 	LojaValidation.admin,
 	clienteController.searchPedidos
 );
-*/
 
 // buscar os clientes por nome
 // router.get('/search/:search',auth.required,LojaValidation.admin,	clienteController.search);
@@ -64,14 +63,14 @@ router.get(
 
 // buscar todos os pedidos de um determinado cliente.
 
-/* será criada quando estiver no modulo de pedidos
+//Modulo 12 - Api pedidos -  criando as rotas para pedidos.
 router.get(
 	'/admin/:id/pedidos',
 	auth.required,
 	LojaValidation.admin,
 	clienteController.showPedidosCliente
 );
-*/
+
 // atualizar os dados do cliente
 // router.put('/admin/:id',auth.required,LojaValidation.admin,clienteController.updateAdmin);
 

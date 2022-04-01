@@ -17,3 +17,6 @@ require('./avaliacao');
 
 //Modulo  11 - Api  variações - criando o modelo.
 require('./variacao');
+
+// Modulo 12 - Api pedidos - criando o modelo de pedidos.
+require('./pedido');

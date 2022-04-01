@@ -301,8 +301,8 @@ class ProdutoController {
 
 	async showVariacoes(req, res, next) {
 		try {
-			const Variacoes = await Variacoes.find({ produto: req.params.id });
-			return res.send({ Variacoes });
+			const variacoes = await Variacao.find({ produto: req.params.id });
+			return res.send({ variacoes });
 		} catch (e) {
 			next(e);
 		}
