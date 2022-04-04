@@ -4,6 +4,12 @@ const mongoose = require('mongoose');
 const Cliente = mongoose.model('Cliente');
 const Usuario = mongoose.model('Usuario');
 
+// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
+
+const Pedido = mongoose.model('Pedido');
+const Produto = mongoose.model('Produto');
+const Variacao = mongoose.model('Variacao');
+
 class ClienteController {
 	// get / index
 	// retorna todos os clientes de uma determinada loja
@@ -31,8 +37,41 @@ class ClienteController {
 
 	// Get / search/:search/pedidos
 
-	searchPedidos(req, res, next) {
-		return res.status(400).send({ error: 'Em Desenvolvimento' });
+	async searchPedidos(req, res, next) {
+		//return res.status(400).send({ error: 'Em Desenvolvimento' });
+		// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
+		const { offset, limit } = req.query;
+		try {
+			const search = new RegExp(req.params.search, 'i');
+			const clientes = await Cliente.find({
+				loja,
+				nome: { $regex: search },
+			});
+			const pedidos = await Pedido.paginate(
+				{ loja, cliente: { $in: clientes.map((item) => item._id) } },
+				{ offset, limit, populate: ['cliente', 'pagamento', 'entrega'] }
+			);
+
+			pedidos.docs = await Promise.all(
+				pedidos.docs.map(async (pedido) => {
+					pedido.carrinho = await Promise.all(
+						pedido.carrinho.map(async (item) => {
+							item.produto = await Produto.findById(item.produto);
+							item.variacao = await produto.findById(
+								item.variacao
+							);
+							return item;
+						})
+					);
+
+					return pedido;
+				})
+			);
+
+			return res.send({ pedidos });
+		} catch (e) {
+			next(e);
+		}
 	}
 
 	// get /admin/:id/pedidos
