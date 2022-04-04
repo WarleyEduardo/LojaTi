@@ -36,7 +36,7 @@ class ClienteController {
 	}
 
 	// get /admin/:id/pedidos
-	searchPedidosCliente(req, res, next) {
+	showPedidosCliente(req, res, next) {
 		return res.status(400).send({ error: 'Em Desenvolvimento' });
 	}
 

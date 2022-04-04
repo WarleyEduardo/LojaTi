@@ -37,7 +37,7 @@ router.get(
 	'/admin/:id/carrinho',
 	auth.required,
 	LojaValidation.admin,
-	pedidoController.shoCarrinhoPedidoAdmin
+	pedidoController.showCarrinhoPedidoAdmin
 );
 
 // entrega
@@ -50,8 +50,8 @@ router.get(
 
 router.get('/', auth.required, pedidoController.index);
 router.get('/:id', auth.required, pedidoController.show);
-router.post('/', auth.required, pedidoController.store),
-	router.delete('/:id', auth.required, pedidoController.remove);
+router.post('/', auth.required, pedidoController.store);
+router.delete('/:id', auth.required, pedidoController.remove);
 
 //-- carrinho
 

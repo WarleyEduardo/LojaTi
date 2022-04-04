@@ -20,3 +20,7 @@ require('./variacao');
 
 // Modulo 12 - Api pedidos - criando o modelo de pedidos.
 require('./pedido');
+
+//Módulo 12- api pedidos - criando os modelos de pagamento e  entrega
+require('./pagamento');
+require('./entrega');
