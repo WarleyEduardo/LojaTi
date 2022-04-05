@@ -8,7 +8,8 @@ const Pagamento = mongoose.model('Pagamento');
 const Entrega = mongoose.model('Entrega');
 const Cliente = mongoose.model('Cliente');
 
-//const CarrinhoValidation = require('./validacoes/carrinhoValidation');
+// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
+const CarrinhoValidation = require('./validacoes/carrinhoValidation');
 
 class PedidoController {
 	//teste
@@ -195,10 +196,14 @@ class PedidoController {
 		const { loja } = req.params;
 
 		try {
-			/*
+			// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
+
 			// CHECAR DADOS DO CARRINHO
 			if (!CarrinhoValidation(carrinho))
 				return res.status(422).send({ error: 'carrinho inválido' });
+
+			/*
+
 
 			// CHECAR DADOS DO ENTREGA
 			if (!EntregaValidation(carrinho, entrega))

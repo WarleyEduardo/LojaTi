@@ -39,7 +39,6 @@ class ClienteController {
 
 	async searchPedidos(req, res, next) {
 		//return res.status(400).send({ error: 'Em Desenvolvimento' });
-		// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
 		const { offset, limit } = req.query;
 		try {
 			const search = new RegExp(req.params.search, 'i');
@@ -75,8 +74,39 @@ class ClienteController {
 	}
 
 	// get /admin/:id/pedidos
-	showPedidosCliente(req, res, next) {
-		return res.status(400).send({ error: 'Em Desenvolvimento' });
+
+	// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
+
+	async showPedidosCliente(req, res, next) {
+		const { offset, limit } = req.query;
+		try {
+			const pedidos = await Pedido.paginate(
+				{ loja, cliente: req.params.id },
+				{
+					offset: Number(offset) || 0,
+					limit: Number(limit) || 30,
+					populate: ['Cliente', 'pagamento', 'entrega'],
+				}
+			);
+
+			pedidos.docs = await Promise.all(
+				pedidos.docs.map(async (pedido) => {
+					pedido.carrinho = await Promise.all(
+						pedido.carrinho.map(async (item) => {
+							item.produto = await Produto.findById(item.produto);
+							item.variacao = await Variacao.findById(
+								item.variacao
+							);
+							return item;
+						})
+					);
+				})
+			);
+
+			return res.send({ pedidos });
+		} catch (e) {
+			next(e);
+		}
 	}
 
 	// get / search/:search

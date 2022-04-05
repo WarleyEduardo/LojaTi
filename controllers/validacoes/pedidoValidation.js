@@ -1,0 +1,50 @@
+// Modulo 12 -  api  pedidos  - Criando as validações para pedidos.
+const Joi = require('joi');
+
+const PedidoValidation = {
+	indexAdmin: {
+		query: {
+			offset: Joi.number().required(),
+			limit: Joi.number().required(),
+		},
+	},
+
+	showAdmin: {
+		params: {
+			id: Joi.string().alphanum().length(24).required(),
+		},
+	},
+
+	removeAdmin: {
+		params: { id: Joi.string().alphanum().length(24).required() },
+	},
+
+	showCarrinhoPedidoAdmin: {
+		params: {
+			id: Joi.string().alphanum().length(24).required(),
+		},
+	},
+	index: {
+		query: {
+			offset: Joi.number().required(),
+			limit: Joi.number().required(),
+			loja: Joi.string().alphanum().length(24).required(),
+		},
+	},
+
+	show: {
+		params: {
+			id: Joi.string().alphanum().length(24).required(),
+		},
+	},
+
+	remove: {
+		params: { id: Joi.string().alphanum().length(24).required() },
+	},
+
+	showCarrinhoPedidos: {
+		params: { id: Joi.string().alphanum().length(24).required() },
+	},
+};
+
+module.exports;
