@@ -42,9 +42,35 @@ const PedidoValidation = {
 		params: { id: Joi.string().alphanum().length(24).required() },
 	},
 
-	showCarrinhoPedidos: {
+	showCarrinhoPedido: {
 		params: { id: Joi.string().alphanum().length(24).required() },
+	},
+
+	store: {
+		query: { loja: Joi.string().alphanum().length(24).required },
+		body: {
+			carrinho: Joi.array()
+				.items(
+					Joi.object({
+						produto: Joi.string().alphanum().length(24).required(),
+						variacao: Joi.string().alphanum().length(24).required(),
+						preocoUnitario: Joi.number().required(),
+						quantidade: Joi.number().required(),
+					})
+				)
+				.required(),
+
+			pagamento: Joi.object({
+				valor: Joi.number().required(),
+				forma: Joi.string().required(),
+			}).required(),
+
+			entrega: Joi.object({
+				custo: Joi.number().required(),
+				prazo: Joi.number().required(),
+			}).required(),
+		},
 	},
 };
 
-module.exports;
+module.exports = { PedidoValidation };

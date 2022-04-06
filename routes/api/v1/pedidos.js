@@ -2,11 +2,19 @@
 
 const router = require('express').Router();
 const PedidoController = require('../../../controllers/PedidoController');
-const ProdutoController = require('../../../controllers/ProdutoController');
+
 const {
 	LojaValidation,
 } = require('../../../controllers/validacoes/lojaValidation');
 const auth = require('../../auth');
+
+// Modulo 12 -  api  pedidos  - Criando as validações para pedidos.
+
+const {
+	PedidoValidation,
+} = require('../../../controllers/validacoes/pedidoValidation');
+
+const Validation = require('express-validation');
 
 const pedidoController = new PedidoController();
 
@@ -16,18 +24,21 @@ router.get(
 	'/admin',
 	auth.required,
 	LojaValidation.admin,
+	Validation(PedidoValidation.indexAdmin),
 	pedidoController.indexAdmin
 );
 router.get(
 	'/admin/:id',
 	auth.required,
 	LojaValidation.admin,
+	Validation(PedidoValidation.showAdmin),
 	pedidoController.showAdmin
 );
 router.delete(
 	'/admin/:id',
 	auth.required,
 	LojaValidation.admin,
+	Validation(PedidoValidation.removeAdmin),
 	pedidoController.removeAdmin
 );
 
@@ -37,6 +48,7 @@ router.get(
 	'/admin/:id/carrinho',
 	auth.required,
 	LojaValidation.admin,
+	Validation(PedidoValidation.showCarrinhoPedidoAdmin),
 	pedidoController.showCarrinhoPedidoAdmin
 );
 
