@@ -60,14 +60,40 @@ router.get(
 
 //------  Rotas do CLIENTE
 
-router.get('/', auth.required, pedidoController.index);
-router.get('/:id', auth.required, pedidoController.show);
-router.post('/', auth.required, pedidoController.store);
-router.delete('/:id', auth.required, pedidoController.remove);
+router.get(
+	'/',
+	auth.required,
+	Validation(PedidoValidation.index),
+	pedidoController.index
+);
+router.get(
+	'/:id',
+	auth.required,
+	Validation(PedidoValidation.show),
+	pedidoController.show
+);
+router.post(
+	'/',
+	auth.required,
+	Validation(PedidoValidation.store),
+	pedidoController.store
+);
+
+router.delete(
+	'/:id',
+	auth.required,
+	Validation(PedidoValidation.remove),
+	pedidoController.remove
+);
 
 //-- carrinho
 
-router.get('/:id/carrinho', auth.required, pedidoController.showCarrinhoPedido);
+router.get(
+	'/:id/carrinho',
+	auth.required,
+	Validation(PedidoValidation.showCarrinhoPedido),
+	pedidoController.showCarrinhoPedido
+);
 // -- entrega
 
 //--------------------------

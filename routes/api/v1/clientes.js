@@ -34,6 +34,7 @@ router.get(
 	'/search/:search/pedidos',
 	auth.required,
 	LojaValidation.admin,
+	Validation(ClienteValidation.searchPedidos), // Modulo 12 -  api  pedidos  - Criando as validações para pedidos.
 	clienteController.searchPedidos
 );
 
@@ -68,6 +69,7 @@ router.get(
 	'/admin/:id/pedidos',
 	auth.required,
 	LojaValidation.admin,
+	Validation(ClienteValidation.showPedidosCliente), // Modulo 12 -  api  pedidos  - Criando as validações para pedidos.
 	clienteController.showPedidosCliente
 );
 

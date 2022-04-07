@@ -13,6 +13,19 @@ const ClienteValidation = {
 			limit: Joi.number(),
 		},
 	},
+
+	// Modulo 12 -  api  pedidos  - Criando as validações para pedidos.
+
+	searchPedidos: {
+		query: {
+			offset: Joi.number(),
+			limit: Joi.number(),
+		},
+		params: {
+			search: Joi.string().required(),
+		},
+	},
+
 	search: {
 		query: {
 			offset: Joi.number(),
@@ -27,6 +40,20 @@ const ClienteValidation = {
 			id: Joi.string().alphanum().length(24).required(),
 		},
 	},
+
+	// Modulo 12 -  api  pedidos  - Criando as validações para pedidos.
+
+	showPedidosCliente: {
+		query: {
+			offset: Joi.number(),
+			limit: Joi.number(),
+		},
+
+		params: {
+			id: Joi.string().alphanum().length(24).required(),
+		},
+	},
+
 	updateAdmin: {
 		params: {
 			id: Joi.string().alphanum().length(24).required(),
