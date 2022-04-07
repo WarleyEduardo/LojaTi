@@ -47,7 +47,7 @@ const PedidoValidation = {
 	},
 
 	store: {
-		query: { loja: Joi.string().alphanum().length(24).required },
+		query: { loja: Joi.string().alphanum().length(24).required() },
 		body: {
 			carrinho: Joi.array()
 				.items(

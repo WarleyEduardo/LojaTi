@@ -132,10 +132,10 @@ class PedidoController {
 	// GET / index
 
 	async index(req, res, next) {
-		const { offset, limit, loja } = req;
+		const { offset, limit, loja } = req.query;
 
 		try {
-			const cliente = await Cliente.findById({ usuario: req.paylod.id });
+			const cliente = await Cliente.findOne({ usuario: req.payload.id });
 			const pedidos = await Pedido.paginate(
 				{ loja, cliente: cliente._id },
 				{
@@ -169,7 +169,7 @@ class PedidoController {
 
 	async show(req, res, next) {
 		try {
-			const cliente = await Cliente.findById({ usuario: req.paylod.id });
+			const cliente = await Cliente.findOne({ usuario: req.paylod.id });
 			const pedido = await Pedido.findOne({
 				cliente: cliente._id,
 				_id: req.params.id,
@@ -193,7 +193,7 @@ class PedidoController {
 
 	async store(req, res, next) {
 		const { carrinho, pagamento, entrega } = req.body;
-		const { loja } = req.params;
+		const { loja } = req.query;
 
 		try {
 			// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
