@@ -54,7 +54,7 @@ const PedidoValidation = {
 					Joi.object({
 						produto: Joi.string().alphanum().length(24).required(),
 						variacao: Joi.string().alphanum().length(24).required(),
-						preocoUnitario: Joi.number().required(),
+						precoUnitario: Joi.number().required(),
 						quantidade: Joi.number().required(),
 					})
 				)

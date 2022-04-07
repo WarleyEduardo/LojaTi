@@ -15,11 +15,11 @@ const getCarrinhoValue = (carrinho) => {
 	return { precoTotal, quantidade };
 };
 
-const getLojaValue = (carrinho) => {
-	const results = Promise.all(
+const getLojaValue = async (carrinho) => {
+	const results = await Promise.all(
 		carrinho.map(async (item) => {
 			const produto = await Produto.findById(item.produto);
-			const variacao = await Varicao.findById(item.variacao);
+			const variacao = await Variacao.findById(item.variacao);
 			let preco = 0;
 			let qtd = 0;
 
@@ -31,9 +31,9 @@ const getLojaValue = (carrinho) => {
 				let _preco = variacao.promocao || variacao.preco;
 				preco = _preco * item.quantidade;
 				qtd = item.quantidade;
-
-				return { preco, qtd };
 			}
+
+			return { preco, qtd };
 		})
 	);
 
@@ -43,13 +43,13 @@ const getLojaValue = (carrinho) => {
 	return { precoTotal, quantidade };
 };
 
-function CarrinhoValidation(carrinho) {
+async function CarrinhoValidation(carrinho) {
 	const {
 		precoTotal: precoTotalCarrinho,
 		quantidade: quantidadeTotalCarrinho,
 	} = getCarrinhoValue(carrinho);
 	const { precoTotal: precotTotalLoja, quantidade: quantidadeTotalLoja } =
-		getLojaValue(carrinho);
+		await getLojaValue(carrinho);
 
 	return (
 		precoTotalCarrinho === precotTotalLoja &&

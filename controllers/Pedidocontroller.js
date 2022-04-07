@@ -199,7 +199,7 @@ class PedidoController {
 			// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
 
 			// CHECAR DADOS DO CARRINHO
-			if (!CarrinhoValidation(carrinho))
+			if (!(await CarrinhoValidation(carrinho)))
 				return res.status(422).send({ error: 'carrinho inválido' });
 
 			/*
