@@ -169,7 +169,7 @@ class PedidoController {
 
 	async show(req, res, next) {
 		try {
-			const cliente = await Cliente.findOne({ usuario: req.paylod.id });
+			const cliente = await Cliente.findOne({ usuario: req.payload.id });
 			const pedido = await Pedido.findOne({
 				cliente: cliente._id,
 				_id: req.params.id,
@@ -218,13 +218,13 @@ class PedidoController {
 					.send({ error: 'Dados de pagamento inválido' });
             */
 
-			const cliente = await Cliente.findOne({ usuario: req.paylod.id });
+			const cliente = await Cliente.findOne({ usuario: req.payload.id });
 
 			const novoPagamento = new Pagamento({
 				valor: pagamento.valor,
 				forma: pagamento.forma,
 				status: 'iniciando',
-				paylod: pagamento,
+				payload: pagamento,
 				loja,
 			});
 
@@ -232,6 +232,7 @@ class PedidoController {
 				status: 'nao_iniciado',
 				custo: entrega.custo,
 				prazo: entrega.prazo,
+				tipo: entrega.tipo,
 				payload: entrega,
 				loja,
 			});
@@ -241,6 +242,7 @@ class PedidoController {
 				carrinho,
 				pagamento: novoPagamento._id,
 				entrega: novaEntrega._id,
+				loja,
 			});
 
 			novoPagamento.pedido = pedido._id;
@@ -253,7 +255,7 @@ class PedidoController {
 			// 	 notificar via e-mail cliente e administrador = novo pedido
 
 			return res.send({
-				pedido: Object.assign({}, pedido, {
+				pedido: Object.assign({}, pedido._doc, {
 					entrega: novaEntrega,
 					pagamento: novoPagamento,
 					cliente,
@@ -267,7 +269,7 @@ class PedidoController {
 	// delete /:id - remove
 	async remove(req, res, next) {
 		try {
-			const cliente = await Cliente.findById({ usuario: req.paylod.id });
+			const cliente = await Cliente.findById({ usuario: req.payload.id });
 			if (!cliente)
 				return res
 					.status(400)
@@ -296,7 +298,7 @@ class PedidoController {
 
 	async showCarrinhoPedido(req, res, next) {
 		try {
-			const cliente = await Cliente.findOne({ usuario: req.paylod.id });
+			const cliente = await Cliente.findOne({ usuario: req.payload.id });
 			const pedido = await Pedido.findOne({
 				cliente: cliente._id,
 				_id: req.params.id,
