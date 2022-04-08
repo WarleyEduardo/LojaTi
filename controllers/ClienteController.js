@@ -101,6 +101,8 @@ class ClienteController {
 							return item;
 						})
 					);
+
+					return pedido;
 				})
 			);
 
