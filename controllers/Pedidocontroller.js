@@ -8,6 +8,11 @@ const Pagamento = mongoose.model('Pagamento');
 const Entrega = mongoose.model('Entrega');
 const Cliente = mongoose.model('Cliente');
 
+//Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
+// para registros de pedidos.
+
+const RegistroPedido = mongoose.model('RegistroPedido');
+
 // Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
 const CarrinhoValidation = require('./validacoes/carrinhoValidation');
 
@@ -73,7 +78,12 @@ class PedidoController {
 				})
 			);
 
-			return res.send({ pedido });
+			//Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
+			// para registros de pedidos.
+
+			const registros = await RegistroPedido.find({ pedido: pedido._id });
+
+			return res.send({ pedido, registros });
 		} catch (e) {
 			next(e);
 		}
@@ -97,6 +107,17 @@ class PedidoController {
 			// enviar email para cliente = pedido cancelado.
 
 			await pedido.save();
+
+			//Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
+			// para registros de pedidos.
+
+			const registroPedido = new RegistroPedido({
+				pedido: pedido._id,
+				tipo: 'pedido',
+				situacao: 'pedido-cancelado',
+			});
+
+			await registroPedido.save();
 
 			return res.send({ cancelado: true });
 		} catch (e) {
@@ -183,7 +204,12 @@ class PedidoController {
 				})
 			);
 
-			return res.send({ pedido });
+			//Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
+			// para registros de pedidos.
+
+			const registros = await RegistroPedido.find({ pedido: pedido._id });
+
+			return res.send({ pedido, registros });
 		} catch (e) {
 			next(e);
 		}
@@ -252,6 +278,17 @@ class PedidoController {
 			await novoPagamento.save();
 			await novaEntrega.save();
 
+			//Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
+			// para registros de pedidos.
+
+			const registroPedido = new RegistroPedido({
+				pedido: pedido._id,
+				tipo: 'pedido',
+				situacao: 'pedido-criado',
+			});
+
+			await registroPedido.save();
+
 			// 	 notificar via e-mail cliente e administrador = novo pedido
 
 			return res.send({
@@ -287,6 +324,17 @@ class PedidoController {
 			// enviar e-mail para admin = pedido.cancelado.
 
 			await pedido.save();
+
+			//Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
+			// para registros de pedidos.
+
+			const registroPedido = new RegistroPedido({
+				pedido: pedido._id,
+				tipo: 'pedido',
+				situacao: 'pedido-cancelado',
+			});
+
+			await registroPedido.save();
 
 			return res.send({ cancelado: true });
 		} catch (e) {

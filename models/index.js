@@ -24,3 +24,7 @@ require('./pedido');
 //Módulo 12- api pedidos - criando os modelos de pagamento e  entrega
 require('./pagamento');
 require('./entrega');
+
+//Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
+// para registros de pedidos.
+require('./registroPedido');
