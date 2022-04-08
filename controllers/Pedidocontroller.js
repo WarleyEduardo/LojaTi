@@ -269,7 +269,7 @@ class PedidoController {
 	// delete /:id - remove
 	async remove(req, res, next) {
 		try {
-			const cliente = await Cliente.findById({ usuario: req.payload.id });
+			const cliente = await Cliente.findById({ usuario: req.paylod.id });
 			if (!cliente)
 				return res
 					.status(400)

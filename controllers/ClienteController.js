@@ -39,7 +39,7 @@ class ClienteController {
 
 	async searchPedidos(req, res, next) {
 		//return res.status(400).send({ error: 'Em Desenvolvimento' });
-		const { offset, limit } = req.query;
+		const { offset, limit, loja } = req.query;
 		try {
 			const search = new RegExp(req.params.search, 'i');
 			const clientes = await Cliente.find({
@@ -56,7 +56,7 @@ class ClienteController {
 					pedido.carrinho = await Promise.all(
 						pedido.carrinho.map(async (item) => {
 							item.produto = await Produto.findById(item.produto);
-							item.variacao = await produto.findById(
+							item.variacao = await Produto.findById(
 								item.variacao
 							);
 							return item;
@@ -78,7 +78,8 @@ class ClienteController {
 	// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
 
 	async showPedidosCliente(req, res, next) {
-		const { offset, limit } = req.query;
+		const { offset, limit, loja } = req.query;
+
 		try {
 			const pedidos = await Pedido.paginate(
 				{ loja, cliente: req.params.id },
