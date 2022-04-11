@@ -16,6 +16,10 @@ const RegistroPedido = mongoose.model('RegistroPedido');
 // Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
 const CarrinhoValidation = require('./validacoes/carrinhoValidation');
 
+//Módulo 13 - integraçao: entrega(correios)  - integraçaõ com correios e testes
+
+const { calcularFrete } = require('./integracoes/correios');
+
 class PedidoController {
 	//teste
 	index(req, res, next) {
@@ -199,7 +203,7 @@ class PedidoController {
 			pedido.carrinho = await Promise.all(
 				pedido.carrinho.map(async (item) => {
 					item.produto = await Produto.findById(item.produto);
-					item.variacao = await Variacao.findById(item.variaca);
+					item.variacao = await Variacao.findById(item.variacao);
 					return item;
 				})
 			);
@@ -209,6 +213,17 @@ class PedidoController {
 
 			const registros = await RegistroPedido.find({ pedido: pedido._id });
 
+			//Módulo 13 - integraçao: entrega(correios)  - integraçaõ com correios e testes
+
+			/*
+			 teste 
+			const resultado = await calcularFrete({
+				cep: '38740182',
+				produtos: pedido.carrinho,
+			});
+
+			return res.send({ resultado });
+            */
 			return res.send({ pedido, registros });
 		} catch (e) {
 			next(e);
