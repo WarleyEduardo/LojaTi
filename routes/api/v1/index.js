@@ -29,4 +29,7 @@ router.use('/variacoes', require('./variacoes'));
 //Modulo 12 - Api pedidos -  criando as rotas para pedidos.
 router.use('/pedidos', require('./pedidos'));
 
+// Módulo 14 -  api entrega - criando  rotas  para módulo de entrega
+router.use('/entregas', require('./entregas'));
+
 module.exports = router;
