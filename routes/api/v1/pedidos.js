@@ -52,8 +52,6 @@ router.get(
 	pedidoController.showCarrinhoPedidoAdmin
 );
 
-// entrega
-
 // pagamento
 
 //-------------------------------
@@ -94,7 +92,6 @@ router.get(
 	Validation(PedidoValidation.showCarrinhoPedido),
 	pedidoController.showCarrinhoPedido
 );
-// -- entrega
 
 //--------------------------
 

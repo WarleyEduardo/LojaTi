@@ -5,7 +5,7 @@ const Entrega = mongoose.model('Entrega');
 const Produto = mongoose.model('Produto');
 const Variacao = mongoose.model('Variacao');
 const RegistroPedido = mongoose.model('RegistroPedido');
-const { calcacularFrete } = require('../controllers/integracoes/correios');
+const { calcularFrete } = require('../controllers/integracoes/correios');
 
 class EntregaController {
 	// get /:id  show
@@ -29,20 +29,20 @@ class EntregaController {
 	// put /:id
 
 	async update(req, res, next) {
-		const { situacao, codigoRastreamento } = req.body;
+		const { status, codigoRastreamento } = req.body;
 		const { loja } = req.query;
 
 		try {
 			const entrega = await Entrega.findOne({ loja, _id: req.params.id });
 
-			if (situacao) entrega.situacao = situacao;
+			if (status) entrega.status = status;
 			if (codigoRastreamento)
 				entrega.codigoRastreamento = codigoRastreamento;
 
 			const registroPedido = new RegistroPedido({
 				pedido: entrega.pedido,
 				tipo: 'entrega',
-				situacao,
+				situacao: status,
 				payload: req.body,
 			});
 
@@ -63,16 +63,19 @@ class EntregaController {
 		const { cep, carrinho } = req.body;
 
 		try {
-			const _carrinho = await Promisse.all(
+			const _carrinho = await Promise.all(
 				carrinho.map(async (item) => {
 					item.produto = await Produto.findById(item.produto);
-					item.variacao = await Varicao.findById(item.variacao);
+					item.variacao = await Variacao.findById(item.variacao);
 
 					return item;
 				})
 			);
 
-			const resultados = await calcacularFrete(cep, _carrinho);
+			const resultados = await calcularFrete({
+				cep,
+				produtos: _carrinho,
+			});
 
 			return res.send({ resultados });
 		} catch (e) {

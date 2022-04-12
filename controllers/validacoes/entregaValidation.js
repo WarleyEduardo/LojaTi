@@ -18,7 +18,7 @@ const EntregaValidation = {
 		query: { loja: Joi.string().alphanum().length(24).required() },
 
 		body: {
-			situacao: Joi.string().optional(),
+			status: Joi.string().optional(),
 			codigoRastreamento: Joi.string().optional(),
 		},
 	},
