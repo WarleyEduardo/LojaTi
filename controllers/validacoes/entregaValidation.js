@@ -1,6 +1,16 @@
 // Módulo 14 -  api entrega - criando  validações com joi
 
 const Joi = require('joi');
+
+//Módulo 14 - api entrega  - criando  a validação de valor de
+// entrega  para novos pedidos
+
+const mongoose = require('mongoose');
+const { promises } = require('nodemailer/lib/xoauth2');
+const Produto = mongoose.model('Produto');
+const Variacao = mongoose.model('Variacao');
+const { calcularFrete } = require('../integracoes/correios');
+
 const EntregaValidation = {
 	show: {
 		params: {
@@ -39,4 +49,36 @@ const EntregaValidation = {
 	},
 };
 
-module.exports = { EntregaValidation };
+//Módulo 14 - api entrega  - criando  a validação de valor de
+// entrega  para novos pedidos
+const checarValorPrazo = async (cep, carrinho, entrega) => {
+	try {
+		const _carrinho = await Promise.all(
+			carrinho.map(async (item) => {
+				item.produto = await Produto.findById(item.produto);
+				item.variacao = await Variacao.findById(item.variacao);
+				return item;
+			})
+		);
+
+		const resultados = await calcularFrete({ cep, produtos: _carrinho });
+
+		let found = false;
+
+		resultados.forEach((resultado) => {
+			if (
+				resultado.codigo.toString() === entrega.tipo &&
+				resultado.valor === entrega.custo.toString() &&
+				resultado.PrazoEntrega === entrega.prazo.toString()
+			)
+				found = true;
+		});
+
+		return found;
+	} catch (e) {
+		console.log(e);
+		return false;
+	}
+};
+
+module.exports = { EntregaValidation, checarValorPrazo };

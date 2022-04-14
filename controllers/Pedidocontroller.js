@@ -20,6 +20,11 @@ const CarrinhoValidation = require('./validacoes/carrinhoValidation');
 
 const { calcularFrete } = require('./integracoes/correios');
 
+// Módulo 14 -  api - entrega criando a validação de valor de
+// entrega  para novos pedidos.
+
+const EntregaValidation = require('./validacoes/entregaValidation');
+
 class PedidoController {
 	//teste
 	index(req, res, next) {
@@ -243,8 +248,8 @@ class PedidoController {
 			if (!(await CarrinhoValidation(carrinho)))
 				return res.status(422).send({ error: 'carrinho inválido' });
 
-			/*
-
+			//Módulo 14 - api entrega  - criando  a validação de valor de
+			// entrega  para novos pedidos
 
 			// CHECAR DADOS DO ENTREGA
 			if (!EntregaValidation(carrinho, entrega))
@@ -252,14 +257,22 @@ class PedidoController {
 					.status(422)
 					.send({ error: 'Dados de entrega inválido' });
 
+			const cliente = await Cliente.findOne({ usuario: req.payload.id });
+
+			//Módulo 14 - api entrega  - criando  a validação de valor de
+			// entrega  para novos pedidos
+
 			// CHECAR DADOS DO PAGAMENTO
-			if (!PagamentoValidation(carrinho, pagamento))
+			if (
+				!(await PagamentoValidation.checarValorPrazo(
+					cliente.endereco.CEP,
+					carrinho,
+					pagamento
+				))
+			)
 				return res
 					.status(422)
 					.send({ error: 'Dados de pagamento inválido' });
-            */
-
-			const cliente = await Cliente.findOne({ usuario: req.payload.id });
 
 			const novoPagamento = new Pagamento({
 				valor: pagamento.valor,
