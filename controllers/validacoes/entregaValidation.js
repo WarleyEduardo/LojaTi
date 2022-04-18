@@ -67,8 +67,8 @@ const checarValorPrazo = async (cep, carrinho, entrega) => {
 
 		resultados.forEach((resultado) => {
 			if (
-				resultado.codigo.toString() === entrega.tipo &&
-				resultado.valor === entrega.custo.toString() &&
+				resultado.Codigo.toString() === entrega.tipo &&
+				Number(resultado.Valor.replace(/,/g, '.')) === entrega.custo &&
 				resultado.PrazoEntrega === entrega.prazo.toString()
 			)
 				found = true;

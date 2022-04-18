@@ -276,8 +276,8 @@ class ClienteController {
 			if (password) cliente.usuario.setSenha(password);
 			if (cpf) cliente.cpf = cpf;
 			if (telefones) cliente.telefones = telefones;
-			if (endereco) cliente.endereco;
-			if (dataDeNascimento) cliente.dataDeNascimento;
+			if (endereco) cliente.endereco = endereco;
+			if (dataDeNascimento) cliente.dataDeNascimento = dataDeNascimento;
 
 			await cliente.save();
 

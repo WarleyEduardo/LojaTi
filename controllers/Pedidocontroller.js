@@ -251,21 +251,28 @@ class PedidoController {
 			//Módulo 14 - api entrega  - criando  a validação de valor de
 			// entrega  para novos pedidos
 
-			// CHECAR DADOS DO ENTREGA
-			if (!EntregaValidation(carrinho, entrega))
-				return res
-					.status(422)
-					.send({ error: 'Dados de entrega inválido' });
-
 			const cliente = await Cliente.findOne({ usuario: req.payload.id });
 
 			//Módulo 14 - api entrega  - criando  a validação de valor de
 			// entrega  para novos pedidos
 
+			// CHECAR DADOS DO ENTREGA
+			if (
+				!(await EntregaValidation.checarValorPrazo(
+					cliente.endereco.CEP,
+					carrinho,
+					entrega
+				))
+			)
+				return res
+					.status(422)
+					.send({ error: 'Dados de entrega inválido' });
+			/*
+
 			// CHECAR DADOS DO PAGAMENTO
 			if (
-				!(await PagamentoValidation.checarValorPrazo(
-					cliente.endereco.CEP,
+				!(await PagamentoValidation(
+					
 					carrinho,
 					pagamento
 				))
@@ -273,6 +280,8 @@ class PedidoController {
 				return res
 					.status(422)
 					.send({ error: 'Dados de pagamento inválido' });
+
+			 */
 
 			const novoPagamento = new Pagamento({
 				valor: pagamento.valor,
