@@ -169,6 +169,35 @@ pagseguro.prototype.sendTransaction = function (transaction, cb) {
 	});
 };
 
+pagseguro.prototype.getNotification = function (notificationCode, cb) {
+	const params = {
+		url:
+			this.url +
+			'/transaction/notifications/' +
+			notificationCode +
+			'?token=' +
+			this.token +
+			'&email=' +
+			this.email,
+	};
+
+	request.get(params, function (err, response, body) {
+		if (err) {
+			return cb(err, false);
+		} else if (response.statusCode === 200) {
+			const json = JSON.parse(xmlParser.toJson(body));
+			return cb(false, json.transaction);
+		} else {
+			const json = JSON.parse(xmlParser.toJson(boby));
+			if (json.errors && json.errors.error) {
+				return cb(json.errors.error, false);
+			}
+
+			return cb(body, false);
+		}
+	});
+};
+
 pagseguro.prototype.sessionId = function (cb) {
 	const url =
 		this.url + '/sessions?token=' + this.token + '&email=' + this.email;
