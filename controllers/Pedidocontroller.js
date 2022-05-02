@@ -251,7 +251,11 @@ class PedidoController {
 			//Módulo 14 - api entrega  - criando  a validação de valor de
 			// entrega  para novos pedidos
 
-			const cliente = await Cliente.findOne({ usuario: req.payload.id });
+			//const cliente = await Cliente.findOne({ usuario: req.payload.id });
+			// Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido.
+			const cliente = await Cliente.findOne({
+				usuario: req.payload.id,
+			}).populate('usuario');
 
 			//Módulo 14 - api entrega  - criando  a validação de valor de
 			// entrega  para novos pedidos
@@ -285,9 +289,14 @@ class PedidoController {
 
 			const novoPagamento = new Pagamento({
 				valor: pagamento.valor,
+				parcelas: pagamento.parcelas || 1, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido.
 				forma: pagamento.forma,
 				status: 'iniciando',
-				payload: pagamento,
+				endereco: pagamento.endereco, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido.
+				cartao: pagamento.cartao, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido
+				enderecoEntregaIgualCobranca:
+					pagamento.enderecoEntregaIgualCobranca, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido
+				//payload: pagamento, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido
 				loja,
 			});
 
@@ -296,7 +305,8 @@ class PedidoController {
 				custo: entrega.custo,
 				prazo: entrega.prazo,
 				tipo: entrega.tipo,
-				payload: entrega,
+				//payload: entrega,// Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido
+				endereco: entrega.endereco, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido
 				loja,
 			});
 
