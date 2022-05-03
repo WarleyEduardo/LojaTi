@@ -25,6 +25,13 @@ const { calcularFrete } = require('./integracoes/correios');
 
 const EntregaValidation = require('./validacoes/entregaValidation');
 
+/*
+    Modulo 16  - api pagamentos  - Criando Validações  para pagamento
+	e atualizando validações no controller de pedidos.  
+*/
+
+const PagamentoValidation = require('./validacoes/pagamentoValidation');
+
 class PedidoController {
 	//teste
 	index(req, res, next) {
@@ -271,21 +278,28 @@ class PedidoController {
 				return res
 					.status(422)
 					.send({ error: 'Dados de entrega inválido' });
+
 			/*
+             Modulo 16  - api pagamentos  - Criando Validações  para pagamento
+           	e atualizando validações no controller de pedidos.  
+            */
 
 			// CHECAR DADOS DO PAGAMENTO
 			if (
-				!(await PagamentoValidation(
-					
+				!(await PagamentoValidation.checarValorTotal({
 					carrinho,
-					pagamento
-				))
+					entrega,
+					pagamento,
+				}))
 			)
 				return res
 					.status(422)
 					.send({ error: 'Dados de pagamento inválido' });
 
-			 */
+			if (!PagamentoValidation.checarCartao(pagamento))
+				return res
+					.status(422)
+					.send({ error: 'Dados de pagamento com cartão inválido' });
 
 			const novoPagamento = new Pagamento({
 				valor: pagamento.valor,

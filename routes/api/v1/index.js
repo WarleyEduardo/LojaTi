@@ -32,4 +32,7 @@ router.use('/pedidos', require('./pedidos'));
 // Módulo 14 -  api entrega - criando  rotas  para módulo de entrega
 router.use('/entregas', require('./entregas'));
 
+//  Modulo 16 -  api pagamentos -  criando rotas para pagamentos.
+router.use('/pagamentos', require('./pagamentos'));
+
 module.exports = router;
