@@ -1,0 +1,13 @@
+http://localhost:3000/v1/api/usuarios/recuperar-senha
+
+warley1@teste.com
+
+123456456
+
+http://localhost:3000/v1/api/usuarios/senha-recuperada?token=0d5160e2cdecfe38b8d8f47440ed2762
+
+https://github.com/mateusfmachado/edz-api
+
+warley1@teste.com
+
+123456789

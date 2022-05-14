@@ -1,0 +1,997 @@
+
+localhost:3000/v1/api/pedidos?loja=6214cd2c010c232de812118d&offset=0&limit=30
+
+
+{ 
+    "carrinho" :[{
+        "produto" :"623a0aa685c38a1d5c896ea7",
+         "variacao":"624f429724cbc53040e3678f",
+         "precoUnitario":10,
+         "quantidade": 4
+    }],
+    "entrega":{
+        "custo": 35.18,
+        "prazo":6,
+        "tipo": "41106"
+    },
+    "pagamento":{
+        "valor":75.18,
+        "forma": "boleto"
+    }
+}
+
+
+
+
+localhost:3000/v1/api/entregas/calcular
+{ 
+     "cep": "38740-123",
+    "carrinho" :[{
+        "quantidade":4,
+        "produto" :"623a0aa685c38a1d5c896ea7",
+         "variacao":"624f429724cbc53040e3678f",
+         "precoUnitario":10    
+    }]
+   
+}
+
+
+
+
+
+usuario:
+
+{
+    "usuario": {
+        "nome": "Eduardo",
+        "email": "eduardo@teste.com",
+        "loja": "6214cd2c010c232de812118d",
+        "role": [
+            "cliente"
+        ],
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGYyYzUxOGQ4YWU1NDM1MGEzYzJhZSIsImVtYWlsIjoiZWR1YXJkb0B0ZXN0ZS5jb20iLCJub21lIjoiRWR1YXJkbyIsImV4cCI6MTY1MTIzMzIyNy4xMDMsImlhdCI6MTY0OTkzNzIyN30.UxbFRShMcgY54Djd_i0AE3K13gxpVKKjBtHhCR1arjo"
+    }
+}
+
+
+admin
+
+
+{
+    "usuario": {
+        "nome": "warley",
+        "email": "warley1@teste.com",
+        "loja": "6214cd2c010c232de812118d",
+        "role": [
+            "cliente",
+            "admin"
+        ],
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTRkYzk5NDY2YmJiMmJiMGNlZDRkOCIsImVtYWlsIjoid2FybGV5MUB0ZXN0ZS5jb20iLCJub21lIjoid2FybGV5IiwiZXhwIjoxNjUxMjMzNTA1LjQwMSwiaWF0IjoxNjQ5OTM3NTA1fQ.FZ2I8sHSFX_xYCLOXhh1ONYA_DyeKJTRqE86pDpBips"
+    }
+}
+
+
+todos os clientes:
+
+{
+    "clientes": {
+        "docs": [
+            {
+                "telefones": [
+                    "11 1234 5678"
+                ],
+                "deletado": true,
+                "_id": "622211e29ccbef0c74e306dc",
+                "nome": "Usuario teste 5",
+                "cpf": "123.456.789-02",
+                "endereco": {
+                    "local": "Rua teste",
+                    "numero": "1",
+                    "bairro": "centro",
+                    "cidade": "CENTRAL",
+                    "estado": "SP",
+                    "CEP": "11234-123"
+                },
+                "loja": "6214cd2c010c232de812118d",
+                "dataDeNascimento": "2000-10-20T00:00:00.000Z",
+                "usuario": null,
+                "createdAt": "2022-03-04T13:19:30.857Z",
+                "updatedAt": "2022-03-07T11:46:30.213Z",
+                "__v": 0
+            },
+            {
+                "telefones": [
+                    "11 1234 5678"
+                ],
+                "deletado": false,
+                "_id": "624f2c518d8ae54350a3c2af",
+                "nome": "Eduardo",
+                "cpf": "123.456.789-11",
+                "endereco": {
+                    "local": "Rua teste",
+                    "numero": "1",
+                    "bairro": "centro",
+                    "cidade": "CENTRAL",
+                    "estado": "SP",
+                    "CEP": "11234-123"
+                },
+                "loja": "6214cd2c010c232de812118d",
+                "dataDeNascimento": "2000-10-20T00:00:00.000Z",
+                "usuario": {
+                    "permissao": [
+                        "cliente"
+                    ],
+                    "_id": "624f2c518d8ae54350a3c2ae",
+                    "nome": "Eduardo",
+                    "email": "eduardo@teste.com",
+                    "loja": "6214cd2c010c232de812118d",
+                    "createdAt": "2022-04-07T18:24:17.887Z",
+                    "updatedAt": "2022-04-07T18:24:17.887Z",
+                    "__v": 0
+                },
+                "createdAt": "2022-04-07T18:24:17.894Z",
+                "updatedAt": "2022-04-07T18:24:17.894Z",
+                "__v": 0
+            }
+        ],
+        "total": 2,
+        "limit": 30,
+        "offset": 0
+    }
+}
+
+
+
+
+
+--------------------
+{
+    "pedido": {
+        "cancelado": false,
+        "_id": "62502097b527381b84a6a7e7",
+        "cliente": {
+            "telefones": [
+                "11 1234 5678"
+            ],
+            "deletado": false,
+            "_id": "624f2c518d8ae54350a3c2af",
+            "nome": "Eduardo",
+            "cpf": "123.456.789-11",
+            "endereco": {
+                "local": "Rua teste",
+                "numero": "1",
+                "bairro": "centro",
+                "cidade": "CENTRAL",
+                "estado": "SP",
+                "CEP": "11234-123"
+            },
+            "loja": "6214cd2c010c232de812118d",
+            "dataDeNascimento": "2000-10-20T00:00:00.000Z",
+            "usuario": "624f2c518d8ae54350a3c2ae",
+            "createdAt": "2022-04-07T18:24:17.894Z",
+            "updatedAt": "2022-04-07T18:24:17.894Z",
+            "__v": 0
+        },
+        "carrinho": [
+            {
+                "_id": "62502097b527381b84a6a7e8",
+                "produto": {
+                    "disponibilidade": false,
+                    "fotos": [
+                        "undefined-1647973311816.jpg"
+                    ],
+                    "avaliacoes": [],
+                    "variacoes": [
+                        "624f429724cbc53040e3678f"
+                    ],
+                    "_id": "623a0aa685c38a1d5c896ea7",
+                    "titulo": "produto teste 3",
+                    "descricao": "esse  é um produto para testar novamente",
+                    "categoria": null,
+                    "preco": 17,
+                    "sku": "a1b1c1",
+                    "loja": "6214cd2c010c232de812118d",
+                    "createdAt": "2022-03-22T17:43:02.807Z",
+                    "updatedAt": "2022-04-07T19:59:19.968Z",
+                    "__v": 6,
+                    "promocao": 12
+                },
+                "variacao": {
+                    "fotos": [],
+                    "quantidade": 0,
+                    "_id": "624f429724cbc53040e3678f",
+                    "codigo": "variacao1",
+                    "nome": "P",
+                    "preco": 15,
+                    "promocao": 10,
+                    "entrega": {
+                        "dimensoes": {
+                            "alturaCm": 15,
+                            "larguraCm": 15,
+                            "profundidadeCm": 15
+                        },
+                        "pesoKg": 0.5
+                    },
+                    "loja": "6214cd2c010c232de812118d",
+                    "produto": "623a0aa685c38a1d5c896ea7",
+                    "createdAt": "2022-04-07T19:59:19.987Z",
+                    "updatedAt": "2022-04-07T19:59:19.987Z",
+                    "__v": 0
+                },
+                "precoUnitario": 10,
+                "quantidade": 1
+            }
+        ],
+        "pagamento": {
+            "_id": "62502097b527381b84a6a7e5",
+            "valor": 17,
+            "forma": "boleto",
+            "status": "iniciando",
+            "loja": "6214cd2c010c232de812118d",
+            "pedido": "62502097b527381b84a6a7e7",
+            "createdAt": "2022-04-08T11:46:31.362Z",
+            "updatedAt": "2022-04-08T11:46:31.362Z",
+            "__v": 0
+        },
+        "entrega": {
+            "_id": "62502097b527381b84a6a7e6",
+            "status": "nao_iniciado",
+            "custo": 7,
+            "prazo": 5,
+            "tipo": "PAC",
+            "payload": {
+                "custo": 7,
+                "prazo": 5,
+                "tipo": "PAC"
+            },
+            "loja": "6214cd2c010c232de812118d",
+            "pedido": "62502097b527381b84a6a7e7",
+            "createdAt": "2022-04-08T11:46:31.365Z",
+            "updatedAt": "2022-04-08T11:46:31.365Z",
+            "__v": 0
+        },
+        "loja": "6214cd2c010c232de812118d",
+        "createdAt": "2022-04-08T11:46:31.355Z",
+        "updatedAt": "2022-04-08T11:46:31.355Z",
+        "__v": 0
+    },
+    "registros": []
+}
+
+
+
+
+
+{
+    "usuario": {
+        "nome": "warley",
+        "email": "warley1@teste.com",
+        "loja": "6214cd2c010c232de812118d",
+        "role": [
+            "cliente",
+            "admin"
+        ],
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTRkYzk5NDY2YmJiMmJiMGNlZDRkOCIsImVtYWlsIjoid2FybGV5MUB0ZXN0ZS5jb20iLCJub21lIjoid2FybGV5IiwiZXhwIjoxNjUxMDgzMjM0LjkwOSwiaWF0IjoxNjQ5Nzg3MjM0fQ.AD3h0TMcYZr3S839g60JDovSpEJBpW9O_zgPTBF8_Lo"
+    }
+}
+
+
+
+625020062acfda2a04cb75f5
+
+{
+    "pedido": {
+        "cancelado": false,
+        "_id": "6250316bd07bef36c4e046c3",
+        "cliente": {
+            "telefones": [
+                "11 1234 5678"
+            ],
+            "deletado": false,
+            "_id": "624f2c518d8ae54350a3c2af",
+            "nome": "Eduardo",
+            "cpf": "123.456.789-11",
+            "endereco": {
+                "local": "Rua teste",
+                "numero": "1",
+                "bairro": "centro",
+                "cidade": "CENTRAL",
+                "estado": "SP",
+                "CEP": "11234-123"
+            },
+            "loja": "6214cd2c010c232de812118d",
+            "dataDeNascimento": "2000-10-20T00:00:00.000Z",
+            "usuario": "624f2c518d8ae54350a3c2ae",
+            "createdAt": "2022-04-07T18:24:17.894Z",
+            "updatedAt": "2022-04-07T18:24:17.894Z",
+            "__v": 0
+        },
+        "carrinho": [
+            {
+                "_id": "6250316bd07bef36c4e046c4",
+                "produto": "623a0aa685c38a1d5c896ea7",
+                "variacao": "624f429724cbc53040e3678f",
+                "precoUnitario": 10,
+                "quantidade": 1
+            }
+        ],
+        "pagamento": {
+            "_id": "6250316bd07bef36c4e046c1",
+            "valor": 17,
+            "forma": "boleto",
+            "status": "iniciando",
+{
+    "pedidos": {
+        "docs": [
+            {
+                "cancelado": false,
+                "_id": "625020062acfda2a04cb75f5",
+                "cliente": {
+                    "telefones": [
+                        "11 1234 5678"
+                    ],
+                    "deletado": false,
+                    "_id": "624f2c518d8ae54350a3c2af",
+                    "nome": "Eduardo",
+                    "cpf": "123.456.789-11",
+                    "endereco": {
+                        "local": "Rua teste",
+                        "numero": "1",
+                        "bairro": "centro",
+                        "cidade": "CENTRAL",
+                        "estado": "SP",
+                        "CEP": "11234-123"
+                    },
+                    "loja": "6214cd2c010c232de812118d",
+                    "dataDeNascimento": "2000-10-20T00:00:00.000Z",
+                    "usuario": "624f2c518d8ae54350a3c2ae",
+                    "createdAt": "2022-04-07T18:24:17.894Z",
+                    "updatedAt": "2022-04-07T18:24:17.894Z",
+                    "__v": 0
+                },
+                "carrinho": [
+                    {
+                        "_id": "625020062acfda2a04cb75f6",
+                        "produto": {
+                            "disponibilidade": false,
+                            "fotos": [
+                                "undefined-1647973311816.jpg"
+                            ],
+                            "avaliacoes": [],
+                            "variacoes": [
+                                "624f429724cbc53040e3678f"
+                            ],
+                            "_id": "623a0aa685c38a1d5c896ea7",
+                            "titulo": "produto teste 3",
+                            "descricao": "esse  é um produto para testar novamente",
+                            "categoria": null,
+                            "preco": 17,
+                            "sku": "a1b1c1",
+                            "loja": "6214cd2c010c232de812118d",
+                            "createdAt": "2022-03-22T17:43:02.807Z",
+                            "updatedAt": "2022-04-07T19:59:19.968Z",
+                            "__v": 6,
+                            "promocao": 12
+                        },
+                        "variacao": null,
+                        "precoUnitario": 10,
+                        "quantidade": 1
+                    }
+                ],
+                "pagamento": {
+                    "_id": "625020062acfda2a04cb75f3",
+                    "valor": 17,
+                    "forma": "boleto",
+                    "status": "iniciando",
+                    "loja": "6214cd2c010c232de812118d",
+                    "pedido": "625020062acfda2a04cb75f5",
+                    "createdAt": "2022-04-08T11:44:06.302Z",
+                    "updatedAt": "2022-04-08T11:44:06.302Z",
+                    "__v": 0
+                },
+                "entrega": {
+                    "_id": "625020062acfda2a04cb75f4",
+                    "status": "nao_iniciado",
+                    "custo": 7,
+                    "prazo": 5,
+                    "tipo": "PAC",
+                    "payload": {
+                        "custo": 7,
+                        "prazo": 5,
+                        "tipo": "PAC"
+                    },
+                    "loja": "6214cd2c010c232de812118d",
+                    "pedido": "625020062acfda2a04cb75f5",
+                    "createdAt": "2022-04-08T11:44:06.326Z",
+                    "updatedAt": "2022-04-08T11:44:06.326Z",
+                    "__v": 0
+                },
+                "loja": "6214cd2c010c232de812118d",
+                "createdAt": "2022-04-08T11:44:06.275Z",
+                "updatedAt": "2022-04-08T11:44:06.275Z",
+                "__v": 0
+            },
+            {
+                "cancelado": false,
+                "_id": "62502097b527381b84a6a7e7",
+                "cliente": {
+                    "telefones": [
+                        "11 1234 5678"
+                    ],
+                    "deletado": false,
+                    "_id": "624f2c518d8ae54350a3c2af",
+                    "nome": "Eduardo",
+                    "cpf": "123.456.789-11",
+                    "endereco": {
+                        "local": "Rua teste",
+                        "numero": "1",
+                        "bairro": "centro",
+                        "cidade": "CENTRAL",
+                        "estado": "SP",
+                        "CEP": "11234-123"
+                    },
+                    "loja": "6214cd2c010c232de812118d",
+                    "dataDeNascimento": "2000-10-20T00:00:00.000Z",
+                    "usuario": "624f2c518d8ae54350a3c2ae",
+                    "createdAt": "2022-04-07T18:24:17.894Z",
+                    "updatedAt": "2022-04-07T18:24:17.894Z",
+                    "__v": 0
+                },
+                "carrinho": [
+                    {
+                        "_id": "62502097b527381b84a6a7e8",
+                        "produto": {
+                            "disponibilidade": false,
+                            "fotos": [
+                                "undefined-1647973311816.jpg"
+                            ],
+                            "avaliacoes": [],
+                            "variacoes": [
+                                "624f429724cbc53040e3678f"
+                            ],
+                            "_id": "623a0aa685c38a1d5c896ea7",
+                            "titulo": "produto teste 3",
+                            "descricao": "esse  é um produto para testar novamente",
+                            "categoria": null,
+                            "preco": 17,
+                            "sku": "a1b1c1",
+                            "loja": "6214cd2c010c232de812118d",
+                            "createdAt": "2022-03-22T17:43:02.807Z",
+                            "updatedAt": "2022-04-07T19:59:19.968Z",
+                            "__v": 6,
+                            "promocao": 12
+                        },
+                        "variacao": null,
+                        "precoUnitario": 10,
+                        "quantidade": 1
+                    }
+                ],
+                "pagamento": {
+                    "_id": "62502097b527381b84a6a7e5",
+                    "valor": 17,
+                    "forma": "boleto",
+                    "status": "iniciando",
+                    "loja": "6214cd2c010c232de812118d",
+                    "pedido": "62502097b527381b84a6a7e7",
+                    "createdAt": "2022-04-08T11:46:31.362Z",
+                    "updatedAt": "2022-04-08T11:46:31.362Z",
+                    "__v": 0
+                },
+                "entrega": {
+                    "_id": "62502097b527381b84a6a7e6",
+                    "status": "nao_iniciado",
+                    "custo": 7,
+                    "prazo": 5,
+                    "tipo": "PAC",
+                    "payload": {
+                        "custo": 7,
+                        "prazo": 5,
+                        "tipo": "PAC"
+                    },
+                    "loja": "6214cd2c010c232de812118d",
+                    "pedido": "62502097b527381b84a6a7e7",
+                    "createdAt": "2022-04-08T11:46:31.365Z",
+                    "updatedAt": "2022-04-08T11:46:31.365Z",
+                    "__v": 0
+                },
+                "loja": "6214cd2c010c232de812118d",
+                "createdAt": "2022-04-08T11:46:31.355Z",
+                "updatedAt": "2022-04-08T11:46:31.355Z",
+                "__v": 0
+            },
+            {
+                "cancelado": false,
+                "_id": "6250316bd07bef36c4e046c3",
+                "cliente": {
+                    "telefones": [
+                        "11 1234 5678"
+                    ],
+                    "deletado": false,
+                    "_id": "624f2c518d8ae54350a3c2af",
+                    "nome": "Eduardo",
+                    "cpf": "123.456.789-11",
+                    "endereco": {
+                        "local": "Rua teste",
+                        "numero": "1",
+                        "bairro": "centro",
+                        "cidade": "CENTRAL",
+                        "estado": "SP",
+                        "CEP": "11234-123"
+                    },
+                    "loja": "6214cd2c010c232de812118d",
+                    "dataDeNascimento": "2000-10-20T00:00:00.000Z",
+                    "usuario": "624f2c518d8ae54350a3c2ae",
+                    "createdAt": "2022-04-07T18:24:17.894Z",
+                    "updatedAt": "2022-04-07T18:24:17.894Z",
+                    "__v": 0
+                },
+                "carrinho": [
+                    {
+                        "_id": "6250316bd07bef36c4e046c4",
+                        "produto": {
+                            "disponibilidade": false,
+                            "fotos": [
+                                "undefined-1647973311816.jpg"
+                            ],
+                            "avaliacoes": [],
+                            "variacoes": [
+                                "624f429724cbc53040e3678f"
+                            ],
+                            "_id": "623a0aa685c38a1d5c896ea7",
+                            "titulo": "produto teste 3",
+                            "descricao": "esse  é um produto para testar novamente",
+                            "categoria": null,
+                            "preco": 17,
+                            "sku": "a1b1c1",
+                            "loja": "6214cd2c010c232de812118d",
+                            "createdAt": "2022-03-22T17:43:02.807Z",
+                            "updatedAt": "2022-04-07T19:59:19.968Z",
+                            "__v": 6,
+                            "promocao": 12
+                        },
+                        "variacao": null,
+                        "precoUnitario": 10,
+                        "quantidade": 1
+                    }
+                ],
+                "pagamento": {
+                    "_id": "6250316bd07bef36c4e046c1",
+                    "valor": 17,
+                    "forma": "boleto",
+                    "status": "iniciando",
+                    "loja": "6214cd2c010c232de812118d",
+                    "pedido": "6250316bd07bef36c4e046c3",
+                    "createdAt": "2022-04-08T12:58:19.518Z",
+                    "updatedAt": "2022-04-08T12:58:19.518Z",
+                    "__v": 0
+                },
+                "entrega": {
+                    "_id": "6250316bd07bef36c4e046c2",
+                    "status": "nao_iniciado",
+                    "custo": 7,
+                    "prazo": 5,
+                    "tipo": "PAC",
+                    "payload": {
+                        "custo": 7,
+                        "prazo": 5,
+                        "tipo": "PAC"
+                    },
+                    "loja": "6214cd2c010c232de812118d",
+                    "pedido": "6250316bd07bef36c4e046c3",
+                    "createdAt": "2022-04-08T12:58:19.523Z",
+                    "updatedAt": "2022-04-08T12:58:19.523Z",
+                    "__v": 0
+                },
+                "loja": "6214cd2c010c232de812118d",
+                "createdAt": "2022-04-08T12:58:19.507Z",
+                "updatedAt": "2022-04-08T12:58:19.507Z",
+                "__v": 0
+            }
+        ],
+        "total": 3,
+        "limit": 30,
+        "offset": 0
+    }
+}
+
+-------------------------
+{
+    "usuario": {
+        "nome": "Eduardo",
+        "email": "eduardo@teste.com",
+        "loja": "6214cd2c010c232de812118d",
+        "role": [
+            "cliente"
+        ],
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGYyYzUxOGQ4YWU1NDM1MGEzYzJhZSIsImVtYWlsIjoiZWR1YXJkb0B0ZXN0ZS5jb20iLCJub21lIjoiRWR1YXJkbyIsImV4cCI6MTY1MDcxODQ1NC4zOTYsImlhdCI6MTY0OTQyMjQ1NH0.1V2HdviZOjvy-gwMWlWT9OQh1gLzcFUQS3lRxW7bEw4"
+    }
+}
+
+
+
+
+lançar pedido
+
+{ 
+    "carrinho" :[{
+        "produto" :"623a0aa685c38a1d5c896ea7",
+         "variacao":"624f429724cbc53040e3678f",
+         "precoUnitario":10,
+         "quantidade": 1
+    }],
+    "entrega":{
+        "custo": 7,
+        "prazo":5,
+        "tipo": "PAC"
+    },
+    "pagamento":{
+        "valor":17,
+        "forma": "boleto"
+    }
+}
+
+
+----------------
+
+pedido lançado:
+
+
+{
+    "pedido": {
+        "cancelado": false,
+        "_id": "62502097b527381b84a6a7e7",
+        "cliente": {
+            "telefones": [
+                "11 1234 5678"
+            ],
+            "deletado": false,
+            "_id": "624f2c518d8ae54350a3c2af",
+            "nome": "Eduardo",
+            "cpf": "123.456.789-11",
+            "endereco": {
+                "local": "Rua teste",
+                "numero": "1",
+                "bairro": "centro",
+                "cidade": "CENTRAL",
+                "estado": "SP",
+                "CEP": "11234-123"
+            },
+            "loja": "6214cd2c010c232de812118d",
+            "dataDeNascimento": "2000-10-20T00:00:00.000Z",
+            "usuario": "624f2c518d8ae54350a3c2ae",
+            "createdAt": "2022-04-07T18:24:17.894Z",
+            "updatedAt": "2022-04-07T18:24:17.894Z",
+            "__v": 0
+        },
+        "carrinho": [
+            {
+                "_id": "62502097b527381b84a6a7e8",
+                "produto": "623a0aa685c38a1d5c896ea7",
+                "variacao": "624f429724cbc53040e3678f",
+                "precoUnitario": 10,
+                "quantidade": 1
+            }
+        ],
+        "pagamento": {
+            "_id": "62502097b527381b84a6a7e5",
+            "valor": 17,
+            "forma": "boleto",
+            "status": "iniciando",
+            "loja": "6214cd2c010c232de812118d",
+            "pedido": "62502097b527381b84a6a7e7",
+            "createdAt": "2022-04-08T11:46:31.362Z",
+            "updatedAt": "2022-04-08T11:46:31.362Z",
+            "__v": 0
+        },
+        "entrega": {
+            "_id": "62502097b527381b84a6a7e6",
+            "status": "nao_iniciado",
+            "custo": 7,
+            "prazo": 5,
+            "tipo": "PAC",
+            "payload": {
+                "custo": 7,
+                "prazo": 5,
+                "tipo": "PAC"
+            },
+            "loja": "6214cd2c010c232de812118d",
+            "pedido": "62502097b527381b84a6a7e7",
+            "createdAt": "2022-04-08T11:46:31.365Z",
+            "updatedAt": "2022-04-08T11:46:31.365Z",
+            "__v": 0
+        },
+        "loja": "6214cd2c010c232de812118d",
+        "createdAt": "2022-04-08T11:46:31.355Z",
+        "updatedAt": "2022-04-08T11:46:31.355Z",
+        "__v": 0
+    }
+}
+
+
+-----
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTRkYzk5NDY2YmJiMmJiMGNlZDRkOCIsImVtYWlsIjoid2FybGV5MUB0ZXN0ZS5jb20iLCJub21lIjoid2FybGV5IiwiZXhwIjoxNjUwNjQ4NTY4LjQ2NSwiaWF0IjoxNjQ5MzUyNTY4fQ.Uqcaxhbews1GvGsYKkCBE5bV-Fky2SsnJISD-UTGbw0
+
+6214cd2c010c232de812118d
+
+
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGYyYzUxOGQ4YWU1NDM1MGEzYzJhZSIsImVtYWlsIjoiZWR1YXJkb0B0ZXN0ZS5jb20iLCJub21lIjoiRWR1YXJkbyIsImV4cCI6MTY1MDY1Mjg2My44MTgsImlhdCI6MTY0OTM1Njg2M30.1zDFD6Pg_8vKUdWwA5N2vrmsFATFuGqEluZlb3CSBIE
+
+
+
+varicaçao cadastrada
+
+{
+    "variacao": {
+        "fotos": [],
+        "quantidade": 0,
+        "_id": "624f429724cbc53040e3678f",
+        "codigo": "variacao1",
+        "nome": "P",
+        "preco": 15,
+        "promocao": 10,
+        "entrega": {
+            "dimensoes": {
+                "alturaCm": 15,
+                "larguraCm": 15,
+                "profundidadeCm": 15
+            },
+            "pesoKg": 0.5
+        },
+        "loja": "6214cd2c010c232de812118d",
+        "produto": "623a0aa685c38a1d5c896ea7",
+        "createdAt": "2022-04-07T19:59:19.987Z",
+        "updatedAt": "2022-04-07T19:59:19.987Z",
+        "__v": 0
+    }
+}
+
+cadastrar cliente:
+
+
+  {"nome": "Eduardo",
+        "cpf": "123.456.789-11",
+        "endereco": {
+            "local": "Rua teste",
+            "numero": "1",
+            "bairro": "centro",
+            "cidade": "CENTRAL",
+            "estado": "SP",
+            "CEP": "11234-123"},
+        "dataDeNascimento": "2000-10-20",
+        "email": "eduardo@teste.com",
+        "password":"123456",
+        "telefones": [
+            "11 1234 5678" ]
+    } 
+
+
+--------------------
+
+cliente cadastrado:
+
+
+
+{
+    "cliente": {
+        "telefones": [
+            "11 1234 5678"
+        ],
+        "deletado": false,
+        "_id": "624f2c518d8ae54350a3c2af",
+        "nome": "Eduardo",
+        "cpf": "123.456.789-11",
+        "endereco": {
+            "local": "Rua teste",
+            "numero": "1",
+            "bairro": "centro",
+            "cidade": "CENTRAL",
+            "estado": "SP",
+            "CEP": "11234-123"
+        },
+        "loja": "6214cd2c010c232de812118d",
+        "dataDeNascimento": "2000-10-20T00:00:00.000Z",
+        "usuario": "624f2c518d8ae54350a3c2ae",
+        "createdAt": "2022-04-07T18:24:17.894Z",
+        "updatedAt": "2022-04-07T18:24:17.894Z",
+        "__v": 0,
+        "email": "eduardo@teste.com"
+    }
+}
+
+
+
+
+{
+    "usuario": {
+        "nome": "teste",
+        "email": "usuario@teste.com",
+        "loja": "6214cd2c010c232de812118d",
+        "role": [
+            "cliente"
+        ],
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGYyMjcwNzk5Yzg1MzljYzM3NWY1NCIsImVtYWlsIjoidXN1YXJpb0B0ZXN0ZS5jb20iLCJub21lIjoidGVzdGUiLCJleHAiOjE2NTA2NDkzMjguNjU2LCJpYXQiOjE2NDkzNTMzMjh9.rG4HEBpEBzz3Y2BFFUB8yYz3t94BCgBahgOTj-1pNmg"
+    }
+}
+senha 123456
+
+
+
+
+       "pontuacao": 5,
+        "_id": "623db4465ee7e52f48172d47",
+        "nome": "Warley",
+        "texto": "produto muito bom ",
+        "loja": "6214cd2c010c232de812118d",
+        "produto": "623a0aa685c38a1d5c896ea7",
+        "createdAt": "2022-03-25T12:23:34.980Z",
+        "updatedAt": "2022-03-25T12:23:34.980Z",
+        "__v": 0
+    }
+
+
+variações
+{
+    "variacao": {
+        "fotos": [],
+        "quantidade": 0,
+        "_id": "62444255717d889d547f1078",
+        "codigo": "variacao1",
+        "nome": "P",
+        "preco": 15,
+        "entrega": {
+            "dimensoes": {
+                "alturaCm": 15,
+                "larguraCm": 15,
+                "profundidadeCm": 15
+            },
+            "pesoKg": 0.5
+        },
+        "loja": "6214cd2c010c232de812118d",
+        "produto": "623a0aa685c38a1d5c896ea7",
+        "createdAt": "2022-03-30T11:43:17.835Z",
+        "updatedAt": "2022-03-30T11:43:17.835Z",
+        "__v": 0
+    }
+}
+
+
+623a0aa685c38a1d5c896ea7
+
+
+categoria:623a038fb95bd639d4f60b09          
+loja : 6214cd2c010c232de812118d
+token 
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTRkYzk5NDY2YmJiMmJiMGNlZDRkOCIsImVtYWlsIjoid2FybGV5MUB0ZXN0ZS5jb20iLCJub21lIjoid2FybGV5IiwiZXhwIjoxNjQ5OTM0NTA5LjI4NywiaWF0IjoxNjQ4NjM4NTA5fQ.gCEJioJS6WbRBtm3LthbNzAHePTWIHILx9uFO755qQc
+produto 623a0aa685c38a1d5c896ea7
+
+623a0917a655c823d89589e9
+
+prdouto 623dadf0a190071fdce0710b
+
+{
+    "titulo":"produto teste",
+    "descricao":"esse é um produto teste",
+    "preco" :15,
+    "sku":"a1b1c1",
+    "categoria" :"623a038fb95bd639d4f60b09"
+
+}
+
+
+
+
+
+{
+    "usuario": {
+        "nome": "warley",
+        "email": "warley1@teste.com",
+        "loja": "6214cd2c010c232de812118d",
+        "role": [
+            "cliente"
+        ],
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTRkYzk5NDY2YmJiMmJiMGNlZDRkOCIsImVtYWlsIjoid2FybGV5MUB0ZXN0ZS5jb20iLCJub21lIjoid2FybGV5IiwiZXhwIjoxNjQ2ODMwMzYxLjg0OSwiaWF0IjoxNjQ1NTM0MzYxfQ.d8MAd0ZV2HBbqHPcyr0zWjWZBM3_NAKEeJGTChnkkd4"
+    }
+}
+
+
+faaae784b89bb269e496a0aa716336bc2b3c1be475e8b9a4c8ca124d197ad312c355abadc97cfa86acb6562d28012cc8d79d323f4d218aefa6b8915184966a62369b06533a215970ecbcc8b35ed12940b63e3ada74241270fab7285222422cc1933847ae092d0e5cd323ca2acb1edcbe0c49766028bec673365776fec788494f47e373de617c37c3e179ef1efdbc9366d444c9b48f70935b94a4fd0d94d6e4a4b1b9a3f1aac37f5644887b40486528252a12ab72bd9747af6bb8bf3b7453f94df0108b36b405310e4f9f190131c6213a4ff8abc3972341fde34a91a4beeca7e94553fbbeba1e84f5ce73d85491e5801b22ed02da353d532753809f4538386cd08466f0c4995dd5da4403876f1a0d0c8b501eb1db9af7d78beda910020ce50e066255b9369b3d8b084081b6cc993fbb56ce8429f75839f844c639db256690768cbd78f74c9fe5355564e3e895a7438ac6fad01bc6d64bd1dce4ae5098c3081cb5540adbb0a7fb05be841920b0369834f3be1a82441356d040adce3642adafdf7cf1cb2a45d4971efebe73bdef97c5576ba386e32c5d9b7424fb159ce4194a06350d82417529a998f3e1401817bf728f36f72487973849a9245e13b0fd05f7344a08c5ecb39c932592fb6aada0376af9acdb531f1a6277cd967ef88971965e154a8f0153f110a4edb65f6b9185125f7147f7a2725fe18852577fb1c7bcfa11a664
+
+
+
+
+{
+  "nome": "Loja 1",
+  "cnpj": "1994390242340",
+  "email": "loja1@gmail.com",
+ "telefones": ["(11) 1234-5678","(11) 9876-5432"] ,
+ "endereco": {
+       "local":"Rua teste"",
+	"numero":"123",
+        "bairro":"centro",
+	"cidade":"Sao Paulo",
+	 "CEP":"01254-534"
+			}
+}
+
+
+loja cadastrada 
+
+{
+    "loja": {
+        "telefones": [
+            "(11) 1234-5678",
+            "(11) 9876-5432"
+        ],
+        "_id": "621006b34763dc348cd2baf2",
+        "nome": "Loja 1",
+        "cnpj": "1994390242340",
+        "email": "loja1@gmail.com",
+        "endereco": {
+            "local": "Rua teste",
+            "numero": "123",
+            "bairro": "centro",
+            "cidade": "Sao Paulo",
+            "CEP": "01254-534"
+        },
+        "createdAt": "2022-02-18T20:50:59.280Z",
+        "updatedAt": "2022-02-18T20:50:59.280Z",
+        "__v": 0
+    }
+}
+
+
+
+"nome" : "warley",
+        "email" : "warley1@teste.com",
+        "loja" : ObjectId("123456789123456789123456"),
+        "salt" : "2166450d613f59193954f911068a3087",
+        "hash" : "ffb93eada20036b875cc42f24aa451e117d9d797375a0d4b4ddbd50d5737ab35b4eb62d16e8da24a4fce580355ffd8c8f275f0a31fb7997a60f5b581aaf7df08b3917200311b5f443380a42682c0d913ccc8c0f2b746cbc1908263e722d2229f3ed7ba627eda2693c858507707937911490b4bd40e19b07e1fa5853758d7fe929328cccd16f6e07eac781a8db4776c7206b7e2e0cfa6b9ddf9083f9cb2d79038a6e6c590eb7f463b2a010513539282786eaf7a101e9d433b1f67946de19af73ebd90bf7494170d39fd92bd7af287b6ff04ad1efa50618f4004f4c3f7f737fe2ee297eacfb289ced3169cfcaba7db1535f7de9667037bf22cf496084744a596c055331e146497d48d4710d4bf69e1fd0d0097ad5bd2f2a0b9d903d66a293ca7cf022c6a00aa9c8a82a3aec375b81f62bf8626cb69d69dcb136b8d2441bc1f46ca60d04e919496f1d3f74424df1a4cd3d2d1fe6c622e5a67ce82d8f7eeef5fa1605bf91a2dcc83a692971700608aa9e3c2726580a632c8261341fb05655bebc3c3f776ef7ab58c3d445869311e1337585dfe570a139735dfe7fc6a7c4e4ee91d834004a8035cfab8fa3b96e7f9b4dd2f656f1e62a16b6166732ab49160c530989590bf361fdfe69a846135765147202e7135bac13d4a11f60773a077c09d772910895956f87e4b216a17121ec973c2c0fce1c5b5f5dc0d100ce5e48c2de4ff36ed"
+
+
+6214cd2c010c232de812118d
+
+622211e29ccbef0c74e306dc
+
+
+
+db.usuarios.update({"_id" : ObjectId("6214dc99466bbb2bb0ced4d8")},{$set:{"permissao":["cliente","admin"],"loja" : ObjectId("6214cd2c010c232de812118d")}})
+
+
+localhost:3000/v1/api/lojas/6214cd2c010c232de812118d?loja=6214cd2c010c232de812118d
+
+usuario admin
+warley1@teste.com
+password : 123456789
+
+
+
+
+cliente cadastrado
+
+
+{
+    "cliente": {
+        "telefones": [
+            "11 1234 5678"
+        ],
+        "deletado": false,
+        "_id": "6222015bf306461ee01198ec",
+        "nome": "Usuario teste",
+        "cpf": "123.456.789-11",
+        "endereco": {
+            "local": "Rua teste",
+            "numero": "1",
+            "bairro": "centro",
+            "cidade": "CENTRAL",
+            "estado": "SP",
+            "CEP": "11234-123"
+        },
+        "dataDeNascimento": "2000-10-20T00:00:00.000Z",
+        "usuario": "6222015bf306461ee01198eb",
+        "email": "cliente@teste.com"
+    }
+}
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMTRkYzk5NDY2YmJiMmJiMGNlZDRkOCIsImVtYWlsIjoid2FybGV5MUB0ZXN0ZS5jb20iLCJub21lIjoid2FybGV5IiwiZXhwIjoxNjQ3Nzg1MjI5LjIxNSwiaWF0IjoxNjQ2NDg5MjI5fQ._E6zrFruEenBLRl2v-0LblkLL_cspP-qRjRhaPkXaQk

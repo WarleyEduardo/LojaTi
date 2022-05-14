@@ -1,0 +1,225 @@
+utilizado o postmam
+
+1 -criar um usuario  admin
+
+POST - http://localhost:3000/v1/api/usuarios/registrar
+
+informar no  body
+
+{ "nome" : "warley",
+   "email" : "warley@teste.com",
+   "password": "123456",
+   "loja": "123456789123456789123456"       
+}
+
+id fake de uma loja 
+123456789123456789123456
+precisar alterar via banco que o  usuario é administrador
+para poder criar a loja
+
+e apos criar a loja altera a id da loja
+db.usuarios.update({"_id" : ObjectId("627cfadbc215c02a1840d132")},{$set:{"permissao":["cliente","admin"],"loja" : ObjectId("627d10230dd27a0c40727434")}})
+
+id : 627cfadbc215c02a1840d132
+-------------------------------------------
+2 - cadastrar uma loja
+
+POST - http://localhost:3000/v1/api/lojas
+
+informar um headers  Authorization com o token do usuario admnistrador
+
+EXEMPLO :
+ 
+Ecommerce eJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2NmYWRiYzIxNWMwMmExODQwZDEzMiIsImVtYWlsIjoid2FybGV5QHRlc3RlLmNvbSIsIm5vbWUiOiJ3YXJsZXkiLCJleHAiOjE2NTM2NTg2NzQuNzQ4LCJpYXQiOjE2NTIzNjI2NzR9.Cv1U8lX7NwVs-Mdr5l3dzcE4zTDB_J9S5WeruSv-UIc
+
+informar no body:
+
+{ 
+  "nome": "Loja 1",
+  "cnpj": "19943902423401",
+  "email": "loja1@gmail.com",
+ "telefones": ["(11) 1234-5678","(11) 9876-5432"] ,
+ "endereco": {
+    "local":"Rua teste",
+	"numero":"123",
+        "bairro":"centro",
+	"cidade":"Sao Paulo",
+	 "CEP":"01254-534" 
+          }
+}
+
+id loja :627d10230dd27a0c40727434
+----------------------------------------------
+3 -criar um cliente   
+
+POST - http://localhost:3000/v1/api/clientes
+
+infomar na query o id loja cadastrada
+
+EXEMPLO :  LOJA : 627d10230dd27a0c40727434
+
+
+informar no body:
+
+  {    "nome": "Eduardo",
+        "cpf": "123.456.789-11",
+        "endereco": {
+            "local": "Rua teste",
+            "numero": "1",
+            "bairro": "centro",
+            "cidade": "CENTRAL",
+            "estado": "SP",
+            "CEP": "11234-123"},
+        "dataDeNascimento": "2000-10-20",
+        "email": "eduardo@teste.com",
+        "password":"123456",
+        "telefones": [
+            "11 1234 5678" ]
+    } 
+
+id cliente : 627d14ab0dd27a0c4072743d
+id usuario : 627d14ab0dd27a0c4072743c
+-------------------------------
+
+4 - criar uma categoria
+POST http://localhost:3000/v1/api/categorias
+infomar na query o id loja cadastrada
+informar um headers  Authorization com o token do usuario admnistrador
+
+informar no body
+{
+   "codigo":"Diverso01",
+   "nome": "Diversos"  
+}
+
+id : 627d631cf6f8271628271439
+------------------
+5 - criar um produto 
+
+POST -  http://localhost:3000/v1/api/produtos
+
+infomar na query o id loja cadastrada
+informar um headers  Authorization com o token do usuario admnistrador
+
+informar no body :
+
+{
+    "titulo":"produto teste",
+    "descricao":"esse é um produto teste",
+    "preco" :15,
+    "promocao" : 10,
+    "sku":"a1b1c1",
+    "categoria" :"627d631cf6f8271628271439"
+}
+
+id :627d67b2f6f8271628271445
+
+---------------------------
+6 - criar um variacao
+
+POST -  http://localhost:3000/v1/api/variacoes
+
+informa na query id da loja e id do produto 627d67b2f6f8271628271445
+informar um headers  Authorization com o token do usuario admnistrador
+
+
+informar no body:
+
+{
+    "quantidade": 30,
+     "codigo": "variacao1",
+     "nome": "P",
+     "preco": 15,
+    "promocao": 10,
+    "entrega": {
+        "dimensoes": {
+            "alturaCm": 15,
+            "larguraCm": 15,
+            "profundidadeCm": 15 },
+    "pesoKg": 0.5}
+ }
+
+id : 627e48b00bff19216cae5995
+--------------------------------
+7 - criar um avaliacao
+
+
+POST -  http://localhost:3000/v1/api/avaliacao
+
+informar na query o id da loja e id do produto
+informar um headers  Authorization com o token do usuario admnistrador ou cliente 
+
+
+informar no doby:
+
+
+{
+    "nome": "otimo",
+    "texto": "produto muito bom ",
+    "pontuacao":5
+
+}
+
+id: 627e4afd0bff19216cae599a
+
+---------------------------------------
+
+8 - calcular valor de  entrega 
+
+POST  localhost:3000/v1/api/entregas/calcular
+{ 
+     "cep": "38740-123",
+    "carrinho" :[{
+        "quantidade":4,
+        "produto" :"627d67b2f6f8271628271445",
+         "variacao":"627e48b00bff19216cae5995",
+         "precoUnitario":10    
+    }]
+   
+}
+
+----------------------------------------
+9 - criar um pedido
+
+
+informar na query o id da loja 
+informar um headers  Authorization com o token do usuario admnistrador ou cliente 
+
+
+{  
+    "carrinho" :[{
+        "produto" :"627d67b2f6f8271628271445",
+         "variacao":"627e48b00bff19216cae5995",
+         "quantidade": 1,
+         "precoUnitario":10
+         }],
+    "entrega":{
+        "custo": 29.40,
+        "tipo":"41106",
+        "prazo":6,
+      "endereco": {
+       "local": "Rua teste",
+        "numero": "1",
+        "bairro": "centro",
+        "cidade": "CENTRAL",
+        "estado": "SP",
+         "CEP": "38740-123" } },
+ 
+    "pagamento":{
+        "valor":39.40,
+        "forma": "boleto",
+        "endereco": {
+        "local": "Rua teste",
+        "numero": "1",
+        "bairro": "centro",
+        "cidade": "CENTRAL",
+        "estado": "SP",
+        "CEP": "38740-123" } ,
+        "enderecoEntregaIgualCobranca" : true
+       }
+   
+}
+
+627ec54ecd96392dc4229c90
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2QxNGFiMGRkMjdhMGM0MDcyNzQzYyIsImVtYWlsIjoiZWR1YXJkb0B0ZXN0ZS5jb20iLCJub21lIjoiRWR1YXJkbyIsImV4cCI6MTY1Mzc2ODIwMS43MDIsImlhdCI6MTY1MjQ3MjIwMX0.VLrLpmo8-6CPx1ofo6YDWA7Ys0FcMtnp83hK1dEC5f8

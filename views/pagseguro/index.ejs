@@ -18,19 +18,14 @@
 			   PagSeguroDirectPayment.setSessionId(idSessaoPagamento);
 			   hashUser = PagSeguroDirectPayment.getSenderHash();
 			   console.log("Hash: ",hashUser);
-
 			   var tokenc = "";
-
 			   var mes = "12";
 			   var ano = "2030";
-			   var cartao = "4111111111111111";
+			   var cartao = "4111111111111111"; 
 			   var bin = "411111";
-
 			   var brand = "";
-
 			   var param = {
-
-				carNumber : cartao,
+				cardNumber : cartao,
 				 brand,
 				 cvv:"123",
 				 expirationMonth : mes,
@@ -52,7 +47,7 @@
 
 					  console.log(response);
 					  brand = response.name;
-					  PagSeguroDirectPayment.creatCardToken(param);
+					  PagSeguroDirectPayment.createCardToken(param);
 				   },
 				   error : (r) => console.log(r),
 				   complete : (r) => console.log(r)

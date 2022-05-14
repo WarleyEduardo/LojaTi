@@ -247,6 +247,7 @@ class PedidoController {
 	async store(req, res, next) {
 		const { carrinho, pagamento, entrega } = req.body;
 		const { loja } = req.query;
+		const _carrinho = carrinho.slice(); // Api pagamentos  - testando o modulo de pagamento (1/2) criando tres pedidos teste.
 
 		try {
 			// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
@@ -326,7 +327,7 @@ class PedidoController {
 
 			const pedido = new Pedido({
 				cliente: cliente._id,
-				carrinho,
+				carrinho: _carrinho,
 				pagamento: novoPagamento._id,
 				entrega: novaEntrega._id,
 				loja,
