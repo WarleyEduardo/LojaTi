@@ -19,7 +19,7 @@ const _criarPagamentoComBoleto = (
 			email: cliente.email,
 			cpf_cnpj: cliente.cpf.replace(/[-\.]/g, ''),
 			area_code: cliente.telefones[0].slice(0, 2),
-			phone: cliente.telefones[0].slice(2).trim(),
+			phone: cliente.telefones[0].slice(2).trim().split(" ").join(""),
 			birth_date: cliente.dataDeNascimento, // formato 	DD/MM/YYYY
 		});
 
@@ -80,7 +80,7 @@ const _criarPagamentoComCartao = (
 			email: cliente.email,
 			cpf_cnpj: cliente.cpf.replace(/[-\.]/g, ''),
 			area_code: cliente.telefones[0].slice(0, 2),
-			phone: cliente.telefones[0].slice(2).trim(),
+			phone: cliente.telefones[0].slice(2).trim().split(" ").join(""),
 			birth_date: cliente.dataDeNascimento, // formato 	DD/MM/YYYY
 		});
 
@@ -119,18 +119,10 @@ const _criarPagamentoComCartao = (
 
 		pag.setCreditCardHolder({
 			name: pagamento.cartao.nomeCompleto || cliente.nome,
-			area_code:
-				pagamento.cartao.codigoArea.trim() ||
-				cliente.telefones[0].slice(0, 2),
-			phone:
-				pagamento.cartao.telefone.trim() ||
-				cliente.telefones[0].slice(2).trim(),
-			birth_date:
-				pagamento.cartao.dataDeNascimento || cliente.dataDeNascimento,
-			cpf_cnpj: (pagamento.cartao.cpf || cliente.cpf).replace(
-				/[-\.]/g,
-				''
-			),
+			area_code: pagamento.cartao.codigoArea.trim() || cliente.telefones[0].slice(0, 2),
+			phone: (pagamento.cartao.telefone.trim() || cliente.telefones[0].slice(2).trim()).split(" ").join(""),
+			birth_date: pagamento.cartao.dataDeNascimento || cliente.dataDeNascimento,
+			cpf_cnpj: (pagamento.cartao.cpf || cliente.cpf).replace(/[-\.]/g, ''),
 		});
 
 		pag.sendTransaction(

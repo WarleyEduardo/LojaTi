@@ -10,7 +10,7 @@ const PagamentoSchema = Schema(
 		forma: { type: String, required: true },
 		//parcelado: { type: Object },
 		// Modulo 16  - Api pagamentos  - Atualizando modelos de pagamento e entrega
-		parcelado: { type: Number, default: 1 },
+		parcelas: { type: Number, default: 1 },
 		endereco: {
 			type: {
 				local: { type: String, required: true },

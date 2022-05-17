@@ -12,6 +12,6 @@ module.exports = {
 			: 'c14265090554938550912@sandbox.pagseguro.com.br',
 	email: 'warleyeduardo@hotmail.com',
 	token: '86C2E7E50E7645A28FE231946414483F',
-	notificationURL:
-		'https://api.loja-teste.ampliee.com/v1/api/pagamentos/notificacao',
+	//notificationURL: 'https://api.loja-teste.ampliee.com/v1/api/pagamentos/notificacao',
+	notificationURL: 'localhost:3000/v1/api/pagamentos/notificacao',
 };

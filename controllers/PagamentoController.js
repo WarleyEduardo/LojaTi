@@ -29,14 +29,20 @@ class PagamentoController {
 			});
 			if (!pagamento) return res.status(400).send({ error: 'pagamento não existe' });
 
-			const registros = await RegistroPedido.findOne({
+			const registros = await RegistroPedido.find({
 				pedido: pagamento.pedido,
 				tipo: 'pagamento',
-			});
-
+			});              
+				
 			const situacao = pagamento.pagSeguroCode ? await getTransactionStatus(pagamento.pagSeguroCode) : null;
-
-			if (situacao && (registros.lenght === 0 || registros[registros.length - 1].payload.code !== situacao.code)) {
+            
+			if (
+				situacao &&
+				(registros.length === 0 ||
+					!registros[registros.length - 1].payload ||
+					!registros[registros.length - 1].payload.code ||
+					registros[registros.length - 1].payload.code !== situacao.code)
+			) {
 				const registroPedido = new RegistroPedido({
 					pedido: pagamento.pedido,
 					tipo: 'pagamento',
@@ -69,7 +75,7 @@ class PagamentoController {
 
 			const pedido = await Pedido.findById(pagamento.pedido).populate([{ path: 'cliente', populate: 'usuario' }, { path: 'entrega' }, { path: 'pagamento' }]);
 
-			pedido.carrinho = await Promisse.all(
+			pedido.carrinho = await Promise.all(
 				pedido.carrinho.map(async (item) => {
 					item.produto = await Produto.findById(item.produto);
 					item.variacao = await Variacao.findById(item.variacao);
@@ -79,7 +85,7 @@ class PagamentoController {
 
 			const payload = await criarPagamento(senderHash, pedido);
 
-			pagamento.payload = pagamento.payload ? pagamento.payload.concate([payload]) : [payload];
+			pagamento.payload = pagamento.payload ? pagamento.payload.concat([payload]) : [payload];
 
 			if (payload.code) pagamento.pagSeguroCode = payload.code;
 
