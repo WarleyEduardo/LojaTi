@@ -12,6 +12,7 @@ const {
 	getNotification,
 } = require('./integracoes/pagseguro');
 
+
 const Pagamento = mongoose.model('Pagamento');
 const Pedido = mongoose.model('Pedido');
 const Produto = mongoose.model('Produto');
@@ -19,30 +20,23 @@ const Variacao = mongoose.model('Variacao');
 const RegistroPedido = mongoose.model('RegistroPedido');
 
 class PagamentoController {
+
 	async show(req, res, next) {
 		try {
 			const pagamento = await Pagamento.findOne({
 				_id: req.params.id,
 				loja: req.query.loja,
 			});
-			if (!pagamento)
-				return res.status(400).send({ error: 'pagamento não existe' });
+			if (!pagamento) return res.status(400).send({ error: 'pagamento não existe' });
 
 			const registros = await RegistroPedido.findOne({
 				pedido: pagamento.pedido,
 				tipo: 'pagamento',
 			});
 
-			const situacao = pagamento.pagSeguroCode
-				? await getTransactionStatus(pagamento.pagSeguroCode)
-				: null;
+			const situacao = pagamento.pagSeguroCode ? await getTransactionStatus(pagamento.pagSeguroCode) : null;
 
-			if (
-				situacao &&
-				(registros.lenght === 0 ||
-					registros[registros.length - 1].payload.code !==
-						situacao.code)
-			) {
+			if (situacao && (registros.lenght === 0 || registros[registros.length - 1].payload.code !== situacao.code)) {
 				const registroPedido = new RegistroPedido({
 					pedido: pagamento.pedido,
 					tipo: 'pagamento',
@@ -71,14 +65,9 @@ class PagamentoController {
 				_id: req.params.id,
 				loja: req.query.loja,
 			});
-			if (!pagamento)
-				return res.status(400).send({ error: 'pagamento não existe' });
+			if (!pagamento) return res.status(400).send({ error: 'pagamento não existe' });
 
-			const pedido = await Pedido.findById(pagamento.pedido).populate([
-				{ path: 'cliente', populate: 'usuario' },
-				{ path: 'entrega' },
-				{ path: 'pagamento' },
-			]);
+			const pedido = await Pedido.findById(pagamento.pedido).populate([{ path: 'cliente', populate: 'usuario' }, { path: 'entrega' }, { path: 'pagamento' }]);
 
 			pedido.carrinho = await Promisse.all(
 				pedido.carrinho.map(async (item) => {
@@ -90,9 +79,7 @@ class PagamentoController {
 
 			const payload = await criarPagamento(senderHash, pedido);
 
-			pagamento.payload = pagamento.payload
-				? pagamento.payload.concate([payload])
-				: [payload];
+			pagamento.payload = pagamento.payload ? pagamento.payload.concate([payload]) : [payload];
 
 			if (payload.code) pagamento.pagSeguroCode = payload.code;
 
@@ -114,8 +101,7 @@ class PagamentoController {
 				_id: req.params.id,
 				loja,
 			});
-			if (!pagamento)
-				return res.status(400).send({ error: 'pagamento não existe' });
+			if (!pagamento) return res.status(400).send({ error: 'pagamento não existe' });
 
 			if (status) {
 				pagamento.status = status;
@@ -154,8 +140,7 @@ class PagamentoController {
 		try {
 			const { notificationCode, notificationType } = req.body;
 
-			if (notificationType !== 'transaction')
-				return res.send({ success: true });
+			if (notificationType !== 'transaction') return res.send({ success: true });
 
 			const result = await getNotification(notificationCode);
 
@@ -163,24 +148,16 @@ class PagamentoController {
 				pagSeguroCode: result.code,
 			});
 
-			if (!pagamento)
-				return res.status(400).send({ error: 'pagamento não existe' });
+			if (!pagamento) return res.status(400).send({ error: 'pagamento não existe' });
 
 			const registros = await RegistroPedido.findOne({
 				pedido: pagamento.pedido,
 				tipo: 'pagamento',
 			});
 
-			const situacao = pagamento.pagSeguroCode
-				? await getTransactionStatus(pagamento.pagSeguroCode)
-				: null;
+			const situacao = pagamento.pagSeguroCode ? await getTransactionStatus(pagamento.pagSeguroCode) : null;
 
-			if (
-				situacao &&
-				(registros.lenght === 0 ||
-					registros[registros.length - 1].payload.code !==
-						situacao.code)
-			) {
+			if (situacao && (registros.lenght === 0 || registros[registros.length - 1].payload.code !== situacao.code)) {
 				const registroPedido = new RegistroPedido({
 					pedido: pagamento.pedido,
 					tipo: 'pagamento',

@@ -185,6 +185,9 @@ POST  localhost:3000/v1/api/entregas/calcular
 informar na query o id da loja 
 informar um headers  Authorization com o token do usuario admnistrador ou cliente 
 
+consultar o preço de envio antes e informar no custo de entrega.
+
+ venda boleto:
 
 {  
     "carrinho" :[{
@@ -219,6 +222,57 @@ informar um headers  Authorization com o token do usuario admnistrador ou client
        }
    
 }
+
+
+venda cartão
+ utilizar http://localhost:3000/v1/api/pagamentos/tokens para gerar o token do cartão.
+
+
+
+{  
+    "carrinho" :[{
+        "produto" :"627d67b2f6f8271628271445",
+         "variacao":"627e48b00bff19216cae5995",
+         "quantidade": 2,
+         "precoUnitario":10
+         }],
+    "entrega":{
+        "custo": 29.40,
+        "tipo":"41106",
+        "prazo":6,
+      "endereco": {
+       "local": "Rua teste",
+        "numero": "1",
+        "bairro": "centro",
+        "cidade": "CENTRAL",
+        "estado": "SP",
+         "CEP": "38740-123" } },
+ 
+    "pagamento":{
+        "valor":49.40,
+        "forma": "creditCard",
+        "parcelas":1,
+        "endereco": {
+        "local": "Rua teste",
+        "numero": "1",
+        "bairro": "centro",
+        "cidade": "CENTRAL",
+        "estado": "SP",
+        "CEP": "38740-123" } ,
+     "cartao":
+      { "nomeCompleto":"Usuario teste",
+         "codigoArea":"11",
+         "telefone":"12345678",
+         "dataDeNascimento":"11/01/1990",
+         "credit_card_token":"625f957e32414c9bbe92751718939c31",
+          "cpf":"29471363063"
+       },
+        "enderecoEntregaIgualCobranca" : true
+       }
+
+   
+}
+
 
 627ec54ecd96392dc4229c90
 

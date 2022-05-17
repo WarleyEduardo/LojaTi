@@ -263,7 +263,7 @@ class PedidoController {
 			// Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido.
 			const cliente = await Cliente.findOne({
 				usuario: req.payload.id,
-			}).populate('usuario');
+			}).populate({ path:'usuario',"select":"id nome email "});
 
 			//Módulo 14 - api entrega  - criando  a validação de valor de
 			// entrega  para novos pedidos

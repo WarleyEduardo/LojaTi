@@ -27,13 +27,16 @@ const pagamentoController = new PagamentoController();
 // TESTE
 
 if (process.env.NODE_ENV !== 'production') {
-	router.get('/tokens', (req, res) => res.render('pagseguro/index'));
+	router.get('/tokens', (req, res) => {
+	  res.render('pagseguro/index');
+	});
 }
 
 // pagseguro
 
 router.post('/notificao', pagamentoController.verNotificacao);
 router.get('/session', pagamentoController.getSessionId);
+
 
 // cliente
 
@@ -59,5 +62,6 @@ router.put(
 	Validation(PagamentoValidation.update),
 	pagamentoController.update
 );
+
 
 module.exports = router;

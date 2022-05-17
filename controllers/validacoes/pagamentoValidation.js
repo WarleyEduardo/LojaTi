@@ -64,7 +64,7 @@ const checarValorTotal = async ({ carrinho, entrega, pagamento }) => {
 		);
 
 		return (
-			valorTotal.toFixed() === pagamento.valor.toFixed() &&
+			valorTotal.toFixed(2) === pagamento.valor.toFixed(2) &&
 			(!pagamento.parcelas || pagamento.parcelas <= 6)
 		);
 	} catch (e) {
@@ -75,7 +75,8 @@ const checarValorTotal = async ({ carrinho, entrega, pagamento }) => {
 
 const checarCartao = (pagamento) => {
 	if (pagamento.forma === 'creditCard') {
-		pagamento.cartao.nomeCompleto &&
+		return (
+			pagamento.cartao.nomeCompleto &&
 			typeof pagamento.cartao.nomeCompleto === 'string' &&
 			pagamento.cartao.codigoArea &&
 			typeof pagamento.cartao.codigoArea === 'string' &&
@@ -86,7 +87,8 @@ const checarCartao = (pagamento) => {
 			pagamento.cartao.credit_card_token &&
 			typeof pagamento.cartao.credit_card_token === 'string' &&
 			pagamento.cartao.cpf &&
-			typeof pagamento.cartao.cpf === 'string';
+			typeof pagamento.cartao.cpf === 'string'
+		);
 	} else if (pagamento.forma === 'boleto') {
 		return true;
 	} else {
