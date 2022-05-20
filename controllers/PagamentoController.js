@@ -156,14 +156,15 @@ class PagamentoController {
 
 			if (!pagamento) return res.status(400).send({ error: 'pagamento não existe' });
 
-			const registros = await RegistroPedido.findOne({
+			const registros = await RegistroPedido.find({
 				pedido: pagamento.pedido,
 				tipo: 'pagamento',
 			});
 
 			const situacao = pagamento.pagSeguroCode ? await getTransactionStatus(pagamento.pagSeguroCode) : null;
 
-			if (situacao && (registros.lenght === 0 || registros[registros.length - 1].payload.code !== situacao.code)) {
+			if (situacao && (registros.lenght === 0 || registros[registros.length - 1].payload.code !== situacao.code))
+			{
 				const registroPedido = new RegistroPedido({
 					pedido: pagamento.pedido,
 					tipo: 'pagamento',

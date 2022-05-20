@@ -173,12 +173,14 @@ const getTransactionStatus = (codigo) => {
 };
 
 const getNotification = (codigo) => {
-	return new Promise((resolver, rejeitar) => {
+  return new Promise((resolver, rejeitar) => {
 		const pag = new PagSeguro(pagSeguroConfig);
 		pag.getNotification(codigo, (err, result) =>
-			err ? rejeitar(err) : resolver(result)
+			(err) ? rejeitar(err) : resolver(result)
 		);
 	});
+
+
 };
 
 module.exports = {

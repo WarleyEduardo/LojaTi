@@ -7,13 +7,14 @@
 
 */
 
+
 const request = require('request');
 const xmlParser = require('xml2json');
 
 const pagseguro = function (params) {
 	this.email = params.email;
 	this.token = params.token;
-	this.notificationURL = params.notificationURL; // adicionado
+	this.notificationURL = params.notificationURL;
 	this.mode = params.sandbox == true ? 'sandbox' : 'prod';
 	this.currency = params.currency || 'BRL';
 	this.sandbox_email = params.sandbox_email;
@@ -42,8 +43,7 @@ pagseguro.prototype.setSender = function (sender) {
 	this.checkoutData.senderName = sender.name;
 	this.checkoutData.senderAreaCode = sender.area_code;
 	this.checkoutData.senderPhone = sender.phone;
-	this.checkoutData.senderEmail =
-		this.mode == 'sandbox' ? this.sandbox_email : sender.email;
+	this.checkoutData.senderEmail = this.mode == 'sandbox' ? this.sandbox_email : sender.email;
 
 	if (sender.cpf_cnpj.length == 11) {
 		this.checkoutData.senderCPF = sender.cpf_cnpj;
@@ -102,34 +102,21 @@ pagseguro.prototype.addItem = function (item) {
 pagseguro.prototype.sendTransaction = function (transaction, cb) {
 	this.checkoutData.paymentMethod = transaction.method;
 	this.checkoutData.installmentQuantity = transaction.installments || 1;
-	this.checkoutData.installmentValue = (
-		transaction.value / transaction.installments
-	).toFixed(2);
+	this.checkoutData.installmentValue = (transaction.value / transaction.installments).toFixed(2);
 	this.checkoutData.senderHash = transaction.hash;
 
 	if (transaction.installments && transaction.installments > 1) {
-		this.checkoutData.noInterestInstallmentQuantity =
-			transaction.installments;
+		this.checkoutData.noInterestInstallmentQuantity = transaction.installments;
 	}
 
 	if (this.checkoutData.paymentMethod == 'creditCard') {
 		this.checkoutData.creditCardToken = transaction.credit_card_token;
-		this.checkoutData.creditCardHolderName = this.holder
-			? this.holder.name
-			: this.sender.name;
-		this.checkoutData.creditCardHolderAreaCode = this.holder
-			? this.holder.area_code
-			: this.sender.area_code;
-		this.checkoutData.creditCardHolderPhone = this.holder
-			? this.holder.phone
-			: this.sender.phone;
-		this.checkoutData.creditCardHolderBirthDate = this.holder
-			? this.holder.birth_date
-			: this.sender.birth_date;
+		this.checkoutData.creditCardHolderName = this.holder ? this.holder.name : this.sender.name;
+		this.checkoutData.creditCardHolderAreaCode = this.holder ? this.holder.area_code : this.sender.area_code;
+		this.checkoutData.creditCardHolderPhone = this.holder ? this.holder.phone : this.sender.phone;
+		this.checkoutData.creditCardHolderBirthDate = this.holder ? this.holder.birth_date : this.sender.birth_date;
 
-		let cpf_cnpj = this.holder
-			? this.holder.cpf_cnpj
-			: this.sender.cpf_cnpj;
+		let cpf_cnpj = this.holder ? this.holder.cpf_cnpj : this.sender.cpf_cnpj;
 		if (cpf_cnpj.length == 11) {
 			this.checkoutData.creditCardHolderCPF = cpf_cnpj;
 		} else {
@@ -138,16 +125,9 @@ pagseguro.prototype.sendTransaction = function (transaction, cb) {
 	}
 
 	const params = {
-		url:
-			this.url +
-			'/transactions?token=' +
-			this.token +
-			'&email=' +
-			this.email,
+		url: this.url + '/transactions?token=' + this.token + '&email=' + this.email,
 		form: this.checkoutData,
 	};
-
-	// adicionado
 	if (this.notificationURL) {
 		params.form.notificationURL = this.notificationURL;
 	}
@@ -171,14 +151,7 @@ pagseguro.prototype.sendTransaction = function (transaction, cb) {
 
 pagseguro.prototype.getNotification = function (notificationCode, cb) {
 	const params = {
-		url:
-			this.url +
-			'/transaction/notifications/' +
-			notificationCode +
-			'?token=' +
-			this.token +
-			'&email=' +
-			this.email,
+		url: this.url + '/transactions/notifications/' + notificationCode + '?token=' + this.token + '&email=' + this.email,
 	};
 
 	request.get(params, function (err, response, body) {
@@ -188,19 +161,17 @@ pagseguro.prototype.getNotification = function (notificationCode, cb) {
 			const json = JSON.parse(xmlParser.toJson(body));
 			return cb(false, json.transaction);
 		} else {
-			const json = JSON.parse(xmlParser.toJson(boby));
+			const json = JSON.parse(xmlParser.toJson(body));
 			if (json.errors && json.errors.error) {
 				return cb(json.errors.error, false);
 			}
-
 			return cb(body, false);
 		}
 	});
 };
 
 pagseguro.prototype.sessionId = function (cb) {
-	const url =
-		this.url + '/sessions?token=' + this.token + '&email=' + this.email;
+	const url = this.url + '/sessions?token=' + this.token + '&email=' + this.email;
 
 	request.post({ url: url }, function (err, response, body) {
 		if (err) {
@@ -220,63 +191,51 @@ pagseguro.prototype.sessionId = function (cb) {
 };
 
 pagseguro.prototype.transactionStatus = function (code, cb) {
-	request.get(
-		{
-			url:
-				this.url +
-				'/transactions/' +
-				code +
-				'?token=' +
-				this.token +
-				'&email=' +
-				this.email,
-		},
-		function (err, response, body) {
-			if (err) {
-				return cb(err, false);
-			} else if (response.statusCode == 200) {
-				const json = JSON.parse(xmlParser.toJson(body));
+	request.get({ url: this.url + '/transactions/' + code + '?token=' + this.token + '&email=' + this.email }, function (err, response, body) {
+		if (err) {
+			return cb(err, false);
+		} else if (response.statusCode == 200) {
+			const json = JSON.parse(xmlParser.toJson(body));
 
-				let status = '';
-				switch (json.transaction.status) {
-					case '1':
-						status = 'Aguardando Pagamento';
-						break;
-					case '2':
-						status = 'Em Análise';
-						break;
-					case '3':
-						status = 'Paga';
-						break;
-					case '4':
-						status = 'Disponível';
-						break;
-					case '5':
-						status = 'Em Disputa';
-						break;
-					case '6':
-						status = 'Devolvida';
-						break;
-					case '7':
-						status = 'Cancelada';
-						break;
-				}
-
-				return cb(false, {
-					code: json.transaction.status,
-					status: status,
-					date: json.transaction.date,
-				});
-			} else {
-				const json = JSON.parse(xmlParser.toJson(body));
-				if (json.errors && json.errors.error) {
-					return cb(json.errors.error, false);
-				}
-
-				return cb(body, false);
+			let status = '';
+			switch (json.transaction.status) {
+				case '1':
+					status = 'Aguardando Pagamento';
+					break;
+				case '2':
+					status = 'Em Análise';
+					break;
+				case '3':
+					status = 'Paga';
+					break;
+				case '4':
+					status = 'Disponível';
+					break;
+				case '5':
+					status = 'Em Disputa';
+					break;
+				case '6':
+					status = 'Devolvida';
+					break;
+				case '7':
+					status = 'Cancelada';
+					break;
 			}
+
+			return cb(false, {
+				code: json.transaction.status,
+				status: status,
+				date: json.transaction.date,
+			});
+		} else {
+			const json = JSON.parse(xmlParser.toJson(body));
+			if (json.errors && json.errors.error) {
+				return cb(json.errors.error, false);
+			}
+
+			return cb(body, false);
 		}
-	);
+	});
 };
 
 module.exports = pagseguro;
