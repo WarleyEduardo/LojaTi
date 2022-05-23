@@ -19,6 +19,15 @@ const Produto = mongoose.model('Produto');
 const Variacao = mongoose.model('Variacao');
 const RegistroPedido = mongoose.model('RegistroPedido');
 
+
+ /* modulo  18  
+    (Extra) api notificações por email 
+   Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
+ */
+
+ const EmailController = require('./EmailController')
+
+
 class PagamentoController {
 
 	async show(req, res, next) {
@@ -121,6 +130,23 @@ class PagamentoController {
 				await registroPedido.save();
 
 				// enviar email de aviso  para o cliente - aviso de atualização de pagamento.
+
+				/* modulo  18
+                  (Extra) api notificações por email 
+                  Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
+                */
+			        
+				const pedido = await Pedido.findById(pagamento.pedido)
+					.populated({ path: "cliente", populate: "usuario" });
+				
+				EmailController.atualizarPedido({
+					usuario: pedido.cliente.usuario,
+					pedido,
+					tipo: "pagamento",
+					status,
+					data: new Date()
+				});
+
 
 				await pagamento.save();
 

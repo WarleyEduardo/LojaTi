@@ -7,6 +7,14 @@ const Variacao = mongoose.model('Variacao');
 const RegistroPedido = mongoose.model('RegistroPedido');
 const { calcularFrete } = require('../controllers/integracoes/correios');
 
+
+ /* modulo  18  
+    (Extra) api notificações por email 
+   Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
+ */
+const Pedido = mongoose.model('Pedido');
+const EmailController = require('./EmailController');
+
 class EntregaController {
 	// get /:id  show
 
@@ -36,8 +44,7 @@ class EntregaController {
 			const entrega = await Entrega.findOne({ loja, _id: req.params.id });
 
 			if (status) entrega.status = status;
-			if (codigoRastreamento)
-				entrega.codigoRastreamento = codigoRastreamento;
+			if (codigoRastreamento) entrega.codigoRastreamento = codigoRastreamento;
 
 			const registroPedido = new RegistroPedido({
 				pedido: entrega.pedido,
@@ -49,6 +56,21 @@ class EntregaController {
 			await registroPedido.save();
 
 			// enviar e-mail de aviso para o cliente - aviso de atualizaão de entrega
+
+			/* modulo  18
+                  (Extra) api notificações por email 
+                  Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
+                */
+
+			const pedido = await Pedido.findById(pagamento.pedido).populated({ path: 'cliente', populate: 'usuario' });
+
+			EmailController.atualizarPedido({
+				usuario: pedido.cliente.usuario,
+				pedido,
+				tipo: 'entrega',
+				status,
+				data: new Date(),
+			});
 
 			await entrega.save();
 			return res.send({ entrega });

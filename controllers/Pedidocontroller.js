@@ -7,6 +7,7 @@ const Variacao = mongoose.model('Variacao');
 const Pagamento = mongoose.model('Pagamento');
 const Entrega = mongoose.model('Entrega');
 const Cliente = mongoose.model('Cliente');
+const Usuario = mongoose.model('Usuario');
 
 //Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
 // para registros de pedidos.
@@ -31,6 +32,14 @@ const EntregaValidation = require('./validacoes/entregaValidation');
 */
 
 const PagamentoValidation = require('./validacoes/pagamentoValidation');
+
+/* modulo  18  
+  (Extra) api notificações por email 
+  Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
+*/
+
+const EmailController = require('./EmailController');
+
 
 class PedidoController {
 	//teste
@@ -112,15 +121,21 @@ class PedidoController {
 			const pedido = await Pedido.findOne({
 				loja: req.query.loja,
 				_id: req.params.id,
-			});
+			}).populate({path: "cliente" , populate: "usuario"}); 
 
-			if (!pedido)
-				return res.status(400).send({ error: 'Pedido não encontrado' });
+			if (!pedido) return res.status(400).send({ error: 'Pedido não encontrado' });
 
 			pedido.cancelado = true;
 
 			// Registro de atividade = pedido : canceladado.
 			// enviar email para cliente = pedido cancelado.
+
+			/* modulo  18
+              (Extra) api notificações por email 
+              Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
+            */
+			 
+			EmailController.cancelarPedido({ usuario: pedido.cliente.usuario, pedido });
 
 			await pedido.save();
 
@@ -253,8 +268,7 @@ class PedidoController {
 			// Modulo 12 - api  pedidos -  atualizando  e corrigindo  as rotas e controller  de clientes em pedidos
 
 			// CHECAR DADOS DO CARRINHO
-			if (!(await CarrinhoValidation(carrinho)))
-				return res.status(422).send({ error: 'carrinho inválido' });
+			if (!(await CarrinhoValidation(carrinho))) return res.status(422).send({ error: 'carrinho inválido' });
 
 			//Módulo 14 - api entrega  - criando  a validação de valor de
 			// entrega  para novos pedidos
@@ -263,22 +277,13 @@ class PedidoController {
 			// Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido.
 			const cliente = await Cliente.findOne({
 				usuario: req.payload.id,
-			}).populate({ path:'usuario',"select":"id nome email "});
+			}).populate({ path: 'usuario', select: 'id nome email ' });
 
 			//Módulo 14 - api entrega  - criando  a validação de valor de
 			// entrega  para novos pedidos
 
 			// CHECAR DADOS DO ENTREGA
-			if (
-				!(await EntregaValidation.checarValorPrazo(
-					cliente.endereco.CEP,
-					carrinho,
-					entrega
-				))
-			)
-				return res
-					.status(422)
-					.send({ error: 'Dados de entrega inválido' });
+			if (!(await EntregaValidation.checarValorPrazo(cliente.endereco.CEP, carrinho, entrega))) return res.status(422).send({ error: 'Dados de entrega inválido' });
 
 			/*
              Modulo 16  - api pagamentos  - Criando Validações  para pagamento
@@ -293,14 +298,9 @@ class PedidoController {
 					pagamento,
 				}))
 			)
-				return res
-					.status(422)
-					.send({ error: 'Dados de pagamento inválido' });
+				return res.status(422).send({ error: 'Dados de pagamento inválido' });
 
-			if (!PagamentoValidation.checarCartao(pagamento))
-				return res
-					.status(422)
-					.send({ error: 'Dados de pagamento com cartão inválido' });
+			if (!PagamentoValidation.checarCartao(pagamento)) return res.status(422).send({ error: 'Dados de pagamento com cartão inválido' });
 
 			const novoPagamento = new Pagamento({
 				valor: pagamento.valor,
@@ -309,8 +309,7 @@ class PedidoController {
 				status: 'iniciando',
 				endereco: pagamento.endereco, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido.
 				cartao: pagamento.cartao, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido
-				enderecoEntregaIgualCobranca:
-					pagamento.enderecoEntregaIgualCobranca, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido
+				enderecoEntregaIgualCobranca: pagamento.enderecoEntregaIgualCobranca, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido
 				//payload: pagamento, // Modulo 16 - Api pagamentos - Atualizando os controller e validações para pedido
 				loja,
 			});
@@ -353,6 +352,22 @@ class PedidoController {
 
 			// 	 notificar via e-mail cliente e administrador = novo pedido
 
+			/* modulo  18
+              (Extra) api notificações por email 
+              Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
+            */
+
+			EmailController.enviarNovoPedido({ usuario: cliente.usuario, pedido });
+
+			// notificar por e-mail os administradores
+			const administradores = await Usuario.find({ permissao: "admin", loja })
+
+			administradores.forEach((usuario) => {
+				 
+				EmailController.enviarNovoPedido({ usuario, pedido });
+
+			});
+
 			return res.send({
 				pedido: Object.assign({}, pedido._doc, {
 					entrega: novaEntrega,
@@ -369,16 +384,12 @@ class PedidoController {
 	async remove(req, res, next) {
 		try {
 			const cliente = await Cliente.findOne({ usuario: req.payload.id });
-			if (!cliente)
-				return res
-					.status(400)
-					.send({ error: 'cliente não encontrado' });
+			if (!cliente) return res.status(400).send({ error: 'cliente não encontrado' });
 			const pedido = await Pedido.findOne({
 				cliente: cliente._id,
 				_id: req.params.id,
 			});
-			if (!pedido)
-				return res.status(400).send({ error: 'Pedido não encontrado' });
+			if (!pedido) return res.status(400).send({ error: 'Pedido não encontrado' });
 
 			pedido.cancelado = true;
 
@@ -394,6 +405,18 @@ class PedidoController {
 				pedido: pedido._id,
 				tipo: 'pedido',
 				situacao: 'pedido-cancelado',
+			});
+
+			/* modulo  18  
+             (Extra) api notificações por email 
+             Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
+            */
+
+			// notificar por e-mail os administradores
+			const administradores = await Usuario.find({ permissao: 'admin', loja: pedido.loja });
+
+			administradores.forEach((usuario) => {
+				EmailController.enviarNovoPedido({ usuario, pedido });
 			});
 
 			await registroPedido.save();
