@@ -25,7 +25,14 @@ const RegistroPedido = mongoose.model('RegistroPedido');
    Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
  */
 
- const EmailController = require('./EmailController')
+const EmailController = require('./EmailController')
+ 
+
+/*
+   Modulo 19  criando validações e atualizando modelos.
+*/
+
+const QuantidadeValidation = require('./validacoes/quantidadeValidation')
 
 
 class PagamentoController {
@@ -135,22 +142,31 @@ class PagamentoController {
                   (Extra) api notificações por email 
                   Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
                 */
-			        
+
 				const pedido = await Pedido.findById(pagamento.pedido).populate({
 					path: 'cliente',
 					populate: { path: 'usuario' },
 				});
-				
+
 				EmailController.atualizarPedido({
 					usuario: pedido.cliente.usuario,
 					pedido,
-					tipo: "pagamento",
+					tipo: 'pagamento',
 					status,
-					data: new Date()
+					data: new Date(),
 				});
 
-
 				await pagamento.save();
+
+				// Modulo 19 - criando funcionalidades  e integrando  com controllers
+
+				//const pedido = await Pedido.findById(pagamento.pedido)
+				if (status.toLowerCase().includes("pago")) {
+					await QuantidadeValidation.atualizarQuantidade('confirmar_pedido', pedido);
+				}else
+				if (status.toLowerCase().includes("cancelado")) {
+				   await QuantidadeValidation.atualizarQuantidade('cancelar_pedido', pedido);	
+				}
 
 				return res.send({ pagamento });
 			}
@@ -202,6 +218,7 @@ class PagamentoController {
 
 				pagamento.status = situacao.status;
 				await pagamento.save();
+
 				await registroPedido.save();
 
 				/* modulo  18
@@ -211,7 +228,7 @@ class PagamentoController {
 
 				const pedido = await Pedido.findById(pagamento.pedido).populate({
 					path: 'cliente',
-					populate:{ path: 'usuario' }
+					populate: { path: 'usuario' },
 				});
 
 				EmailController.atualizarPedido({
@@ -221,6 +238,14 @@ class PagamentoController {
 					status: situacao.status,
 					data: new Date(),
 				});
+
+				// Modulo 19 - criando funcionalidades  e integrando  com controllers
+
+				if (pagamento.status.toLowerCase().includes('pago')) {
+					await QuantidadeValidation.atualizarQuantidade('confirmar_pedido', pedido);
+				} else if (pagamento.status.toLowerCase().includes('cancelado')) {
+					await QuantidadeValidation.atualizarQuantidade('cancelar_pedido', pedido);
+				}
 			}
 
 			return res.send({ success: true });

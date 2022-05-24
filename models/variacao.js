@@ -24,6 +24,7 @@ const VariacaoSchema = Schema(
 			},
 		},
 		quantidade: { type: Number, default: 0 },
+		quantidadeBloqueada: { type: Number, default: 0 },  // Modulo 19  criando validações e atualizando modelos.
 		produto: {
 			type: Schema.Types.ObjectId,
 			ref: 'Produto',

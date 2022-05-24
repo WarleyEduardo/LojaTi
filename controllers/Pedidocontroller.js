@@ -41,6 +41,12 @@ const PagamentoValidation = require('./validacoes/pagamentoValidation');
 const EmailController = require('./EmailController');
 
 
+/*
+   Modulo 19  criando validações e atualizando modelos.
+*/
+
+const QuantidadeValidation = require('./validacoes/quantidadeValidation')
+
 class PedidoController {
 	//teste
 	index(req, res, next) {
@@ -121,7 +127,7 @@ class PedidoController {
 			const pedido = await Pedido.findOne({
 				loja: req.query.loja,
 				_id: req.params.id,
-			}).populate({ path: "cliente", populate: { path: "usuario"}}); 
+			}).populate({ path: 'cliente', populate: { path: 'usuario' } });
 
 			if (!pedido) return res.status(400).send({ error: 'Pedido não encontrado' });
 
@@ -134,10 +140,14 @@ class PedidoController {
               (Extra) api notificações por email 
               Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
             */
-			 
+
 			EmailController.cancelarPedido({ usuario: pedido.cliente.usuario, pedido });
 
 			await pedido.save();
+
+			// Modulo 19 - criando funcionalidades  e integrando  com controllers
+
+			await QuantidadeValidation.atualizarQuantidade('cancelar_pedido', pedido);
 
 			//Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
 			// para registros de pedidos.
@@ -285,6 +295,10 @@ class PedidoController {
 			// CHECAR DADOS DO ENTREGA
 			if (!(await EntregaValidation.checarValorPrazo(cliente.endereco.CEP, carrinho, entrega))) return res.status(422).send({ error: 'Dados de entrega inválido' });
 
+			// Modulo 19  criando validações e atualizando modelos.
+
+			if (!(await QuantidadeValidation.validarQuantidadeDisponivel(carrinho))) return res.status(400).send({ error: 'produtos não tem quantidade disponível' });
+
 			/*
              Modulo 16  - api pagamentos  - Criando Validações  para pagamento
            	e atualizando validações no controller de pedidos.  
@@ -339,6 +353,10 @@ class PedidoController {
 			await novoPagamento.save();
 			await novaEntrega.save();
 
+			// Modulo 19 - criando funcionalidades  e integrando  com controllers
+
+			await QuantidadeValidation.atualizarQuantidade("salvar_pedido", pedido);
+
 			//Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
 			// para registros de pedidos.
 
@@ -360,12 +378,10 @@ class PedidoController {
 			EmailController.enviarNovoPedido({ usuario: cliente.usuario, pedido });
 
 			// notificar por e-mail os administradores
-			const administradores = await Usuario.find({ permissao: "admin", loja })
+			const administradores = await Usuario.find({ permissao: 'admin', loja });
 
 			administradores.forEach((usuario) => {
-				 
 				EmailController.enviarNovoPedido({ usuario, pedido });
-
 			});
 
 			return res.send({
@@ -397,6 +413,10 @@ class PedidoController {
 			// enviar e-mail para admin = pedido.cancelado.
 
 			await pedido.save();
+
+			// Modulo 19 - criando funcionalidades  e integrando  com controllers
+
+			await QuantidadeValidation.atualizarQuantidade('cancelar_pedido', pedido);
 
 			//Modulo 12 - api pedidos -  (Extra) criando modelo e funcionalidades
 			// para registros de pedidos.
