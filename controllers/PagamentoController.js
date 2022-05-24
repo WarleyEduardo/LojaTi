@@ -136,8 +136,10 @@ class PagamentoController {
                   Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
                 */
 			        
-				const pedido = await Pedido.findById(pagamento.pedido)
-					.populated({ path: "cliente", populate: "usuario" });
+				const pedido = await Pedido.findById(pagamento.pedido).populate({
+					path: 'cliente',
+					populate: { path: 'usuario' },
+				});
 				
 				EmailController.atualizarPedido({
 					usuario: pedido.cliente.usuario,
@@ -201,6 +203,24 @@ class PagamentoController {
 				pagamento.status = situacao.status;
 				await pagamento.save();
 				await registroPedido.save();
+
+				/* modulo  18
+                  (Extra) api notificações por email 
+                  Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
+                */
+
+				const pedido = await Pedido.findById(pagamento.pedido).populate({
+					path: 'cliente',
+					populate:{ path: 'usuario' }
+				});
+
+				EmailController.atualizarPedido({
+					usuario: pedido.cliente.usuario,
+					pedido,
+					tipo: 'pagamento',
+					status: situacao.status,
+					data: new Date(),
+				});
 			}
 
 			return res.send({ success: true });

@@ -62,8 +62,12 @@ class EntregaController {
                   Criando controller para notifiçãoes  por e-mail  e atualizando  funcionalidades.
                 */
 
-			const pedido = await Pedido.findById(pagamento.pedido).populated({ path: 'cliente', populate: 'usuario' });
+			const pedido = await Pedido.findById(entrega.pedido).populate({
+				path: 'cliente',
+				populate: { path: 'usuario' },
+			});
 
+           /*
 			EmailController.atualizarPedido({
 				usuario: pedido.cliente.usuario,
 				pedido,
@@ -71,6 +75,17 @@ class EntregaController {
 				status,
 				data: new Date(),
 			});
+             */
+
+             	EmailController.atualizarEntrega({
+					usuario: pedido.cliente.usuario,
+					pedido,
+					tipo: 'entrega',
+					status,
+					data: new Date(),
+					undefined,
+					codigoRastreamento
+				});
 
 			await entrega.save();
 			return res.send({ entrega });

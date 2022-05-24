@@ -121,7 +121,7 @@ class PedidoController {
 			const pedido = await Pedido.findOne({
 				loja: req.query.loja,
 				_id: req.params.id,
-			}).populate({path: "cliente" , populate: "usuario"}); 
+			}).populate({ path: "cliente", populate: { path: "usuario"}}); 
 
 			if (!pedido) return res.status(400).send({ error: 'Pedido não encontrado' });
 
@@ -416,7 +416,7 @@ class PedidoController {
 			const administradores = await Usuario.find({ permissao: 'admin', loja: pedido.loja });
 
 			administradores.forEach((usuario) => {
-				EmailController.enviarNovoPedido({ usuario, pedido });
+				EmailController.cancelarPedido({ usuario, pedido });
 			});
 
 			await registroPedido.save();
