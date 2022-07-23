@@ -11,7 +11,7 @@ class UsuarioController {
 				if (!usuario)
 					return res
 						.status(401)
-						.json({ erros: 'Usuario não registrado' });
+						.json({ errors: 'Usuario não registrado' });
 				return res.json({ usuario: usuario.enviarAuthJSON() });
 			})
 			.catch(next);
@@ -26,7 +26,7 @@ class UsuarioController {
 				if (!usuario)
 					return res
 						.status(401)
-						.json({ erros: 'Usuario não registrado' });
+						.json({ errors: 'Usuario não registrado' });
 
 				return res.json({
 					usuario: {
@@ -82,7 +82,7 @@ class UsuarioController {
 				if (!usuario)
 					return res
 						.status(401)
-						.json({ erros: 'Usuário não registrado' });
+						.json({ errors: 'Usuário não registrado' });
 
 				if (typeof nome !== 'undefined') usuario.nome = nome;
 				if (typeof email !== 'undefined') usuario.email = email;
@@ -106,7 +106,7 @@ class UsuarioController {
 				if (!usuario)
 					return res
 						.status(401)
-						.json({ erros: 'Usuário não registrado' });
+						.json({ errors: 'Usuário não registrado' });
 				return usuario
 					.remove()
 					.then(() => {
@@ -139,14 +139,36 @@ class UsuarioController {
 				if (!usuario)
 					return res
 						.status(401)
-						.json({ erros: 'Usuário não registrado' });
+						.json({ errors: 'Usuário não registrado' });
 				if (!usuario.validarSenha(password))
-					return res.status(401).json({ erros: 'Senha Inválida' });
-
+					return res.status(401).json({ errors: 'Senha Inválida' });    
+	
 				return res.json({ usuario: usuario.enviarAuthJSON() });
 			})
 			.catch(next);
 	}
+
+
+  	// post /login/admin
+
+	loginAdmin(req, res, next) {
+		const { email, password } = req.body;
+		Usuario.findOne({ email })
+			.then((usuario) => {
+				if (!usuario)
+					return res
+						.status(401)
+						.json({ errors: 'Usuário não registrado' });
+				if (!usuario.validarSenha(password))
+					return res.status(401).json({ errors: 'Senha Inválida' });  
+				
+				if (!usuario.permissao.includes('admin')) return res.status(401).json({ errors: 'Usuário não tem permisão de administrador' });
+	
+				return res.json({ usuario: usuario.enviarAuthJSON() });
+			})
+			.catch(next);
+	}
+
 
 	// recovery
 

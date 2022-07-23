@@ -1,7 +1,7 @@
 {
 	"name": "ecomerce-api",
 	"version": "0.0.1",
-	"description": "Api para curso ecomerce do zero",
+	"description": "Api para curso e-comerce do zero",
 	"main": "server.js",
 	"scripts": {
 		"test": "mocha --timeout 2000 --exit",

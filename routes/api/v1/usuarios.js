@@ -22,6 +22,13 @@ router.post(
 	usuarioController.login
 ); // testado
 
+
+router.post(
+	'/login/admin',
+	Validation(UsuarioValidation.login),
+	usuarioController.loginAdmin
+); 
+
 // Modulo 6 - Api Validações  - atualizando as validações no usuario.
 //router.post('/registrar', usuarioController.store); // testado
 // inserção

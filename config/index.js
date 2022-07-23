@@ -16,5 +16,5 @@ module.exports = {
 	loja:
 		process.env.NODE_ENV === 'production'
 			? 'https://loja-teste.ampliee.com'
-			: 'http://localhost:8000',
+			: 'http://localhost:3000',
 };
